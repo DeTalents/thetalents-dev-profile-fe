@@ -10,15 +10,20 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.2",
+    "@hookform/resolvers": "^3.10.0",
     "@phosphor-icons/react": "^2.1.7",
     "antd": "^5.23.3",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
+    "lucide-react": "^0.474.0",
     "next": "14.2.18",
     "phosphor-react": "^1.4.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-toastify": "^11.0.3"
+    "react-hook-form": "^7.54.2",
+    "react-toastify": "^11.0.3",
+    "tailwind-merge": "^3.0.1",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/node": "^20",

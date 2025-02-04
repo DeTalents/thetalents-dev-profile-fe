@@ -1,5 +1,7 @@
+import { Form } from '@/components/profile/form';
+
 const CreateProfile = () => {
-  return <div>CreateProfile</div>;
+  return <Form />;
 };
 
 export default CreateProfile;
