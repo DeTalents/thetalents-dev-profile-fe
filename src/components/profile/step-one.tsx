@@ -27,10 +27,15 @@ export function StepOne() {
   //Reset nonAndelaProgram just in case user decided to select andela program back to No
   useEffect(() => {
     if (isAndelanValue !== 'NONE') {
-      methods.setValue('nonAndelaProgram', undefined);
-      methods.setValue('programYear', undefined);
+      // Batch the updates to prevent multiple re-renders
+      methods.reset({
+        ...methods.getValues(),
+        nonAndelaProgram: undefined,
+        programYear: undefined,
+      });
     }
-  }, [isAndelanValue, methods]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAndelanValue, methods.reset, methods.getValues]);
 
   return (
     <>

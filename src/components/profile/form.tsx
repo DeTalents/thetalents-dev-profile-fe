@@ -6,7 +6,7 @@ import createProfileSchema, {
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useState } from 'react';
-import { type FieldName, FormProvider, useForm } from 'react-hook-form';
+import { type FieldPath, FormProvider, useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 import { Step } from './step';
 import { StepOne } from './step-one';
@@ -29,47 +29,27 @@ const steps = [
   },
   {
     id: 2,
-    title: 'Our services',
-    description: 'Please select which service you are interested in.',
+    title: 'Professional Background',
+    description: 'Highlight your summary, skills and exprience',
     component: <StepTwo />,
-    fields: ['interestedService'],
+    fields: ['summary', 'yearsOfExperience', 'skills', 'experience'],
   },
   {
     id: 3,
-    title: 'What’s your project budget?',
-    description: 'Please select the project budget range you have in mind.',
+    title: 'References',
+    description:
+      'Please provide professional references who can vouch for your work experience.',
     component: <StepThree />,
-    fields: ['projectBudgetRange'],
+    fields: ['references'],
   },
   {
     id: 4,
-    title: 'Submit your quote requet',
+    title: 'Submit Your Profile',
     description:
-      'Please review all the information you previously typed in the past steps, and if all is okay, submit your message to receive a project quote in 24 - 48 hours.',
+      'Review all the information you have entered in the previous steps. If everything is correct, submit your profile for review. The review process will take 24-48 hours.',
     isLast: true,
   },
 ];
-
-// const formSchema = z.object({
-//   name: z.string().min(1, 'Name is required'),
-//   email: z.string().email('Invalid email'),
-//   phone: z.string().min(10, 'Phone number is required'),
-//   companyName: z.string().min(1, 'Company name is required'),
-//   interestedService: z.enum([
-//     'Development',
-//     'Web Design',
-//     'Marketing',
-//     'Other',
-//   ]),
-//   projectBudgetRange: z.enum([
-//     '5000-10000',
-//     '10000-20000',
-//     '20000-50000',
-//     '50000+',
-//   ]),
-// });
-
-// export type CreateProfileSchema = z.infer<typeof formSchema>;
 
 export function Form() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -80,14 +60,14 @@ export function Form() {
   });
 
   async function onSubmit(data: CreateProfileSchema) {
-    console.log(data);
+    console.log('++++++++', data);
     methods.reset();
   }
 
   async function nextStep() {
     const fields = steps[currentStep].fields;
     const isValid = await methods.trigger(
-      fields as FieldName<CreateProfileSchema>[],
+      fields as FieldPath<CreateProfileSchema>[],
       {
         shouldFocus: true,
       }
