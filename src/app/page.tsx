@@ -1,10 +1,9 @@
-import { Button } from 'antd';
+import LoginScreen from '@/components/auth/LoginScreen';
 
 export default function HomePage() {
   return (
-    <div>
-      <h1>Hello The talents</h1>
-      <Button type="primary">Get started</Button>
+    <div className="container">
+      <LoginScreen />
     </div>
   );
 }
