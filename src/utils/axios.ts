@@ -10,10 +10,25 @@ const axiosInstance = axios.create({
   baseURL: api_base_url,
 });
 
+// Helper function to get cookie by name
+const getCookie = (name: string): string | undefined => {
+  if (typeof window === 'undefined') return undefined;
+
+  return document.cookie
+    .split('; ')
+    .find((row) => row.startsWith(`${name}=`))
+    ?.split('=')[1];
+};
+
+// Helper function to delete cookie
+const deleteCookie = (name: string) => {
+  document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+};
+
 axiosInstance.interceptors.request.use(
   (config) => {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('token');
+      const token = getCookie('token');
       if (token) {
         config.headers['Authorization'] = token;
       }
@@ -35,8 +50,10 @@ axiosInstance.interceptors.response.use(
     }
     if (error?.response?.status === 401) {
       if (typeof window !== 'undefined') {
-        localStorage.clear();
-        window.location.href = '/auth/login';
+        // Clear all cookies
+        deleteCookie('token');
+        // Redirect to login
+        window.location.href = '/';
       }
     }
     return Promise.reject(error);
@@ -49,6 +66,7 @@ if (typeof window !== 'undefined') {
     return;
   });
 }
+
 interface RequestMethods {
   get: <T>(URL: string, params?: Record<string, any>) => Promise<T>;
   post: <T>(URL: string, body: any, config?: AxiosRequestConfig) => Promise<T>;

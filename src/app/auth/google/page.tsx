@@ -1,5 +1,6 @@
 'use client';
 
+import FormSkeleton from '@/components/skeletons/form';
 import request from '@/utils/axios';
 import { AxiosError } from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -17,19 +18,17 @@ const GoogleAuthPage = () => {
           router.push('/');
           return;
         }
-        localStorage.setItem('token', `Bearer ${token}`);
+
+        // Set the token using document.cookie
+        document.cookie = `token=Bearer ${token}; path=/; max-age=${
+          7 * 24 * 60 * 60
+        }; secure; samesite=strict`;
 
         await request.get('/developer-profile');
-
         router.push('/profile/developer');
       } catch (error: unknown) {
-        if (error instanceof AxiosError && error.response?.status === 404) {
-          if (
-            error &&
-            typeof error === 'object' &&
-            'response' in error &&
-            error.response?.status === 404
-          ) {
+        if (error instanceof AxiosError) {
+          if (error.response?.status === 404) {
             router.push('/profile/developer/create');
           } else {
             console.error('Error fetching developer profile:', error);
@@ -42,11 +41,7 @@ const GoogleAuthPage = () => {
     handleAuth();
   }, [token, router]);
 
-  return (
-    <div className="flex justify-center items-center w-full h-screen">
-      <div className="bg-primaryBlue/10 w-20 h-20 rounded-md shadow-sm animate-spin"></div>
-    </div>
-  );
+  return <FormSkeleton />;
 };
 
 const SuspendedGoogleAuthPage = () => (
