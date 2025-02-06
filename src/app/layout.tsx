@@ -1,7 +1,9 @@
 import { AntdProvider } from '@/components/global/AntiProvider';
+import { Providers } from '@/tan-query/provider';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { ToastContainer } from 'react-toastify';
 import './globals.css';
 
 const geistSans = localFont({
@@ -30,9 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AntdRegistry>
-          <AntdProvider>{children}</AntdProvider>
-        </AntdRegistry>
+        <Providers>
+          <AntdRegistry>
+            <AntdProvider>
+              {children}
+              <ToastContainer />
+            </AntdProvider>
+          </AntdRegistry>
+        </Providers>
       </body>
     </html>
   );

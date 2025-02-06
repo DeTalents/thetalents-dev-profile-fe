@@ -42,13 +42,13 @@ const refenceSchema = z.object({
 const createProfileSchema = z
   .object({
     firstName: z.string().min(1, 'First name is required'),
-    lastName: z.string().min(1, 'Last name is required'),
-    phoneNumber: z.string().min(10, 'Phone number is required'),
+    secondName: z.string().min(1, 'Last name is required'),
+    phone: z.string().min(10, 'Phone number is required'),
     isAndelan: z.enum(PROGRAM_OPTIONS, {
       errorMap: () => ({ message: 'Please select a program' }),
     }),
     nonAndelaProgram: z.string().optional(),
-    programYear: z.string().optional(),
+    nonAndelaProgramYear: z.string().optional(),
     summary: z.string().min(10, 'Summary is required'),
     yearsOfExperience: z.string().min(1, 'Years of experience is required'),
     skills: z.array(z.string().min(2)).min(1, 'Add at least one skill'),
@@ -69,19 +69,19 @@ const createProfileSchema = z
         });
       }
 
-      if (!data.programYear) {
+      if (!data.nonAndelaProgramYear) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: 'Program year is required',
-          path: ['programYear'],
+          path: ['nonAndelaProgramYear'],
         });
       } else {
-        const year = parseInt(data.programYear);
+        const year = parseInt(data.nonAndelaProgramYear);
         if (year < 2016 || year > 2029) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: 'Year must be between 2016 and 2029',
-            path: ['programYear'],
+            path: ['nonAndelaProgramYear'],
           });
         }
       }
