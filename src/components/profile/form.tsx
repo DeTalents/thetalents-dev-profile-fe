@@ -1,14 +1,11 @@
 'use client';
 
-import { useCreateProfile } from '@/tan-query/hooks/useCreateProfile';
-import { showToast } from '@/utils/helpers/toast';
 import createProfileSchema, {
   CreateProfileSchema,
 } from '@/validations/createProfile';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AxiosError } from 'axios';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { type FieldPath, FormProvider, useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
@@ -56,11 +53,9 @@ const steps = [
 ];
 
 export function Form() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(0);
-
-  const { mutate, isPending } = useCreateProfile();
 
   const methods = useForm<CreateProfileSchema>({
     resolver: zodResolver(createProfileSchema),
@@ -68,23 +63,8 @@ export function Form() {
   });
 
   async function onSubmit(data: CreateProfileSchema) {
-    mutate(data, {
-      onSuccess: () => {
-        methods.reset();
-        showToast('Profile created successfully!', 'success');
-        router.push('/profile/developer');
-      },
-      onError: (error) => {
-        if (error instanceof AxiosError) {
-          showToast(
-            error.response?.data?.error || 'Something went wrong',
-            'error'
-          );
-        } else {
-          showToast('Failed to create profile', 'error');
-        }
-      },
-    });
+    console.log('++++', data);
+    methods.reset();
   }
 
   async function nextStep() {
@@ -171,14 +151,14 @@ export function Form() {
                 <button
                   type="button"
                   onClick={nextStep}
-                  disabled={isPending}
-                  className={twMerge(
-                    'mt-4 px-10 py-3 bg-indigo-600 text-white rounded-[66px] hover:bg-indigo-700 transition-colors duration-100',
-                    isPending &&
-                      'opacity-50 cursor-not-allowed hover:bg-indigo-600'
-                  )}
+                  // disabled={isPending}
+                  //   className={twMerge(
+                  //     'mt-4 px-10 py-3 bg-indigo-600 text-white rounded-[66px] hover:bg-indigo-700 transition-colors duration-100',
+                  //     isPending &&
+                  //       'opacity-50 cursor-not-allowed hover:bg-indigo-600'
+                  //   )}
                 >
-                  {isPending ? 'Submitting...' : 'Submit'}
+                  {/* // {isPending ? 'Submitting...' : 'Submit'} */}
                 </button>
               )}
 

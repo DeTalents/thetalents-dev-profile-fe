@@ -1,5 +1,5 @@
 import { AntdProvider } from '@/components/global/AntiProvider';
-import { Providers } from '@/tan-query/provider';
+
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
@@ -32,14 +32,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <AntdRegistry>
-            <AntdProvider>
-              {children}
-              <ToastContainer />
-            </AntdProvider>
-          </AntdRegistry>
-        </Providers>
+        <AntdRegistry>
+          <AntdProvider>
+            {children}
+            <ToastContainer />
+          </AntdProvider>
+        </AntdRegistry>
       </body>
     </html>
   );
