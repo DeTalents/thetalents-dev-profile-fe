@@ -1,11 +1,13 @@
 'use client';
 
+import { useCreateProfileMutation } from '@/features/api/profileApi';
+import { showToast } from '@/utils/helpers/toast';
 import createProfileSchema, {
   CreateProfileSchema,
 } from '@/validations/createProfile';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { type FieldPath, FormProvider, useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
@@ -53,9 +55,9 @@ const steps = [
 ];
 
 export function Form() {
-  // const router = useRouter();
-
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
+  const [createProfile, { isLoading }] = useCreateProfileMutation();
 
   const methods = useForm<CreateProfileSchema>({
     resolver: zodResolver(createProfileSchema),
@@ -63,8 +65,19 @@ export function Form() {
   });
 
   async function onSubmit(data: CreateProfileSchema) {
-    console.log('++++', data);
-    methods.reset();
+    try {
+      await createProfile(data).unwrap();
+      showToast.success('Profile created successfully!');
+      methods.reset();
+      router.push('/profile/developer');
+    } catch (error) {
+      if (error && typeof error === 'object' && 'data' in error) {
+        showToast.error(error.data?.error || 'Failed to create profile');
+      } else {
+        showToast.error('An unexpected error occurred');
+      }
+      console.error('Profile creation error:', error);
+    }
   }
 
   async function nextStep() {
@@ -151,14 +164,14 @@ export function Form() {
                 <button
                   type="button"
                   onClick={nextStep}
-                  // disabled={isPending}
-                  //   className={twMerge(
-                  //     'mt-4 px-10 py-3 bg-indigo-600 text-white rounded-[66px] hover:bg-indigo-700 transition-colors duration-100',
-                  //     isPending &&
-                  //       'opacity-50 cursor-not-allowed hover:bg-indigo-600'
-                  //   )}
+                  disabled={isLoading}
+                  className={twMerge(
+                    'mt-4 px-10 py-3 bg-indigo-600 text-white rounded-[66px] hover:bg-indigo-700 transition-colors duration-100',
+                    isLoading &&
+                      'opacity-50 cursor-not-allowed hover:bg-indigo-600'
+                  )}
                 >
-                  {/* // {isPending ? 'Submitting...' : 'Submit'} */}
+                  {isLoading ? 'Submitting...' : 'Submit'}
                 </button>
               )}
 
