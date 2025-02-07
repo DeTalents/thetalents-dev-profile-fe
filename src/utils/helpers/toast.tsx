@@ -1,3 +1,5 @@
+'use client';
+
 import { toast, ToastPosition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

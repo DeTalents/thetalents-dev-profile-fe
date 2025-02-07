@@ -31,7 +31,7 @@ export function StepOne() {
       methods.reset({
         ...methods.getValues(),
         nonAndelaProgram: undefined,
-        programYear: undefined,
+        nonAndelaProgramYear: undefined,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +51,7 @@ export function StepOne() {
         <Input
           label="Last Name"
           register={methods.register}
-          name="lastName"
+          name="secondName"
           errors={methods.formState.errors}
           placeholder="carter"
         />
@@ -61,10 +61,10 @@ export function StepOne() {
         <Input
           label="Phone Number"
           register={methods.register}
-          name="phoneNumber"
+          name="phone"
           errors={methods.formState.errors}
           onChange={(e) =>
-            methods.setValue('phoneNumber', maskPhoneNumber(e.target.value))
+            methods.setValue('phone', maskPhoneNumber(e.target.value))
           }
           maxLength={16}
           placeholder="(123) 456 - 7890"
@@ -96,7 +96,7 @@ export function StepOne() {
                   nonAndelaProgramValue
                 )}"?`}
                 register={methods.register}
-                name="programYear"
+                name="nonAndelaProgramYear"
                 errors={methods.formState.errors}
                 placeholder="2016-2029"
                 type="number"
