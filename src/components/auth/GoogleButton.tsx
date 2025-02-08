@@ -1,4 +1,4 @@
-import { api_base_url } from '@/utils/axios';
+import { api_base_url } from '@/features/api/apiSlice';
 import { GoogleLogo } from '@phosphor-icons/react';
 import { Button } from 'antd';
 
@@ -6,8 +6,6 @@ const GoogleButton = () => {
   const handleGoogleLogin = () => {
     const authUrl = `${api_base_url}/auth/google`;
     window.location.href = authUrl;
-
-    console.log('+++++', api_base_url);
   };
 
   return (

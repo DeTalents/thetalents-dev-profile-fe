@@ -6,26 +6,48 @@ import { ProgramInfo } from './edit/ProgramInfo';
 import { References } from './edit/References';
 import { Skills } from './edit/Skills';
 
-interface UserProfileProps {
-  profileData: {
-    data: {
-      firstName: string;
-      secondName: string;
-      user: {
-        email: string;
-      };
-      phone: string;
-      yearsOfExperience: number;
-      summary: string;
-      isAndelan: string;
-      nonAndelaProgram?: string;
-      nonAndelaProgramYear?: string;
-      experience: any[];
-      skills: string[];
-      references: any[];
-      isVerified: boolean;
+export interface Experience {
+  role: string;
+  company: string;
+  endDate?: string;
+  startDate: string;
+  description: string;
+}
+
+export interface Reference {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  relationship: string;
+}
+
+export interface ProfileData {
+  message: string;
+  data: {
+    id: string;
+    userId: string;
+    firstName: string;
+    secondName: string;
+    phone: string;
+    summary: string;
+    experience: Experience[];
+    skills: string[];
+    isAndelan: string;
+    references: Reference[];
+    nonAndelaProgram?: string;
+    nonAndelaProgramYear?: string;
+    yearsOfExperience: number;
+    isVerified: boolean;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+      email: string;
     };
   };
+}
+
+interface UserProfileProps {
+  profileData: ProfileData;
 }
 
 const UserProfile = ({ profileData }: UserProfileProps) => {
