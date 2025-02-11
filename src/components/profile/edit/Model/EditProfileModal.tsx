@@ -1,5 +1,5 @@
 import { Textarea } from '@/components/inputs/textarea';
-import { CreateProfileSchema } from '@/validations/createProfile';
+import { UpdateBasicDetails } from '@/utils/types';
 import { Modal } from 'antd';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../input';
@@ -7,26 +7,24 @@ import { Input } from '../../input';
 interface EditProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: CreateProfileSchema) => void;
-  defaultValues: CreateProfileSchema;
+  defaultValues: UpdateBasicDetails;
 }
 
 const EditProfileModal = ({
   isOpen,
   onClose,
-  onSubmit,
   defaultValues,
 }: EditProfileModalProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateProfileSchema>({
+  } = useForm<UpdateBasicDetails>({
     defaultValues,
   });
 
-  const handleFormSubmit = (data: CreateProfileSchema) => {
-    onSubmit(data);
+  const handleFormSubmit = (data: UpdateBasicDetails) => {
+    console.log(data);
     onClose();
   };
 

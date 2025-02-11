@@ -9,7 +9,6 @@ interface ProgramInfoProps {
   isAndelan: AndelaProgram;
   nonAndelaProgram?: NonAndelaProgram;
   nonAndelaProgramYear?: string;
-  // onUpdateProgram: (data: ProgramInfoFormData) => void;
 }
 export const ProgramInfo = ({
   programName,
@@ -17,8 +16,7 @@ export const ProgramInfo = ({
   isAndelan,
   nonAndelaProgram,
   nonAndelaProgramYear,
-}: // onUpdateProgram,
-ProgramInfoProps) => {
+}: ProgramInfoProps) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleOpenModal = () => setIsEditModalOpen(true);
@@ -58,7 +56,6 @@ ProgramInfoProps) => {
       <EditProgramModal
         isOpen={isEditModalOpen}
         onClose={handleCloseModal}
-        // onSubmit={onUpdateProgram}
         defaultValues={defaultValues}
       />
     </div>

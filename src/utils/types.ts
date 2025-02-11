@@ -18,4 +18,8 @@ export type BasicDetails = {
   phone: string;
   yearsOfExperience: string;
   summary: string;
+  email: string;
+  isVerified: boolean;
 };
+
+export type UpdateBasicDetails = Omit<BasicDetails, 'email' | 'isVerified'>;

@@ -1,18 +1,22 @@
-import { CreateProfileSchema } from '@/validations/createProfile';
 import { ComponentPropsWithoutRef } from 'react';
-import { FieldErrors, FieldPath, get, UseFormRegister } from 'react-hook-form';
+import {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
-interface TextareaProps
+interface TextareaProps<T extends FieldValues>
   extends Omit<ComponentPropsWithoutRef<'textarea'>, 'name'> {
   label: string;
-  register: UseFormRegister<CreateProfileSchema>;
-  name: FieldPath<CreateProfileSchema>;
-  errors: FieldErrors<CreateProfileSchema>;
+  register: UseFormRegister<T>;
+  name: Path<T>;
+  errors: FieldErrors<T>;
   placeholder: string;
 }
 
-export function Textarea({
+export function Textarea<T extends FieldValues>({
   label,
   register,
   name,
@@ -20,10 +24,9 @@ export function Textarea({
   placeholder,
   className,
   ...props
-}: TextareaProps) {
-  // Use the get utility to safely access nested errors
-  const errorMessage = get(errors, name)?.message;
-  const hasError = !!errorMessage;
+}: TextareaProps<T>) {
+  const hasError = !!errors[name];
+  const errorMessage = errors[name]?.message;
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -46,7 +49,9 @@ export function Textarea({
           )}
         />
       </div>
-      {hasError && <p className="text-red-500 text-sm">{errorMessage}</p>}
+      {hasError && (
+        <p className="text-red-500 text-sm">{errorMessage as string}</p>
+      )}
     </div>
   );
 }

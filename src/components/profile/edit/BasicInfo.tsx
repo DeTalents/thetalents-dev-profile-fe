@@ -3,51 +3,25 @@ import { useState } from 'react';
 import EditProfileModal from './Model/EditProfileModal';
 import { VerificationBadge } from './VerificationBadge';
 // import { useUpdateProfileMutation } from '../store/api';
-import { CreateProfileSchema } from '@/validations/createProfile';
-
-interface BasicInfoProps {
-  firstName: string;
-  secondName: string;
-  email: string;
-  phone: string;
-  yearsOfExperience: string;
-  summary: string;
-  isVerified: boolean;
-}
+import { BasicDetails, UpdateBasicDetails } from '@/utils/types';
 
 export const BasicInfo = ({
   firstName,
   secondName,
-  email,
   phone,
+  email,
   yearsOfExperience,
   summary,
   isVerified,
-}: BasicInfoProps) => {
+}: BasicDetails) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [updateProfile] = useUpdateProfileMutation();
 
-  const handleSubmit = async (data: CreateProfileSchema) => {
-    try {
-      // await updateProfile(data).unwrap();
-      console.log('++++++', data);
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error('Failed to update profile:', error);
-    }
-  };
-
-  const defaultValues: CreateProfileSchema = {
-    //Todo: Need it's schema
+  const defaultValues: UpdateBasicDetails = {
     firstName,
     secondName,
     phone,
     yearsOfExperience,
     summary,
-    isAndelan: 'NONE',
-    skills: [],
-    experience: [],
-    references: [],
   };
 
   return (
@@ -89,7 +63,6 @@ export const BasicInfo = ({
       <EditProfileModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSubmit={handleSubmit}
         defaultValues={defaultValues}
       />
     </div>
