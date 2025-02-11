@@ -8,6 +8,7 @@ import { References } from './edit/References';
 import { Skills } from './edit/Skills';
 
 export interface Experience {
+  id: string;
   role: string;
   company: string;
   endDate?: string;

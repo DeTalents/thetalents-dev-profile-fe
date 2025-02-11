@@ -36,7 +36,7 @@ const EditProfileModal = ({
       okText="Save Changes"
       cancelText="Cancel"
       onOk={handleSubmit(handleFormSubmit)}
-      width={600}
+      width={700}
       destroyOnClose
     >
       <form className="flex flex-col gap-6 py-4">
@@ -58,22 +58,24 @@ const EditProfileModal = ({
           />
         </div>
 
-        <Input
-          label="Phone"
-          register={register}
-          name="phone"
-          errors={errors}
-          placeholder="Enter your phone number"
-        />
+        <div className="grid grid-cols-2 gap-6">
+          <Input
+            label="Phone"
+            register={register}
+            name="phone"
+            errors={errors}
+            placeholder="Enter your phone number"
+          />
 
-        <Input
-          label="Years of Experience"
-          register={register}
-          name="yearsOfExperience"
-          errors={errors}
-          type="number"
-          placeholder="Enter years of experience"
-        />
+          <Input
+            label="Years of Experience"
+            register={register}
+            name="yearsOfExperience"
+            errors={errors}
+            type="number"
+            placeholder="Enter years of experience"
+          />
+        </div>
 
         <Textarea
           label="Summary"
