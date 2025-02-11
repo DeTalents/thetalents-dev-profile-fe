@@ -1,3 +1,4 @@
+import { UpdateBasicDetails } from '@/utils/types';
 import { CreateProfileSchema } from '@/validations/createProfile';
 import { apiSlice } from './apiSlice';
 
@@ -11,7 +12,17 @@ export const profileApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Profile'],
     }),
+
+    updateProfile: builder.mutation<any, UpdateBasicDetails>({
+      query: (profileData) => ({
+        url: '/developer-profile',
+        method: 'PATCH',
+        body: profileData,
+      }),
+      invalidatesTags: ['Profile'],
+    }),
   }),
 });
 
-export const { useCreateProfileMutation } = profileApi;
+export const { useCreateProfileMutation, useUpdateProfileMutation } =
+  profileApi;

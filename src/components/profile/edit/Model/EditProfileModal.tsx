@@ -1,6 +1,7 @@
 import { Textarea } from '@/components/inputs/textarea';
+import { useUpdateProfileMutation } from '@/features/api/profileApi';
 import { UpdateBasicDetails } from '@/utils/types';
-import { Modal } from 'antd';
+import { message, Modal } from 'antd';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../input';
 
@@ -15,6 +16,8 @@ const EditProfileModal = ({
   onClose,
   defaultValues,
 }: EditProfileModalProps) => {
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+
   const {
     register,
     handleSubmit,
@@ -23,9 +26,15 @@ const EditProfileModal = ({
     defaultValues,
   });
 
-  const handleFormSubmit = (data: UpdateBasicDetails) => {
-    console.log(data);
-    onClose();
+  const handleFormSubmit = async (data: UpdateBasicDetails) => {
+    try {
+      await updateProfile(data).unwrap();
+      message.success('Profile updated successfully');
+      onClose();
+    } catch (error) {
+      message.error('Failed to update profile');
+      console.error('Update error:', error);
+    }
   };
 
   return (
@@ -36,6 +45,7 @@ const EditProfileModal = ({
       okText="Save Changes"
       cancelText="Cancel"
       onOk={handleSubmit(handleFormSubmit)}
+      confirmLoading={isLoading}
       width={700}
       destroyOnClose
     >
