@@ -31,7 +31,6 @@ const ProfilePage = () => {
     return <div>No profile data available</div>;
   }
 
-  // Pass the entire profileResponseData (which includes the message and data)
   return <UserProfile profileData={profileResponseData} />;
 };
 
