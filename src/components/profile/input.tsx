@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { CreateProfileSchema } from '@/validations/createProfile';
 import { ComponentPropsWithoutRef } from 'react';
 import {
   FieldErrors,
@@ -16,16 +14,17 @@ type NestedKeyOf<ObjectType extends FieldValues> = {
     : `${Key}`;
 }[keyof ObjectType & (string | number)];
 
-interface InputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'name'> {
+interface InputProps<T extends FieldValues>
+  extends Omit<ComponentPropsWithoutRef<'input'>, 'name'> {
   label: string;
-  register: UseFormRegister<CreateProfileSchema>;
-  name: NestedKeyOf<CreateProfileSchema>;
-  errors: FieldErrors<CreateProfileSchema>;
+  register: UseFormRegister<T>;
+  name: NestedKeyOf<T>;
+  errors: FieldErrors<T>;
   placeholder: string;
   icon?: React.ReactNode;
 }
 
-export function Input({
+export function Input<T extends FieldValues>({
   label,
   register,
   name,
@@ -34,12 +33,9 @@ export function Input({
   icon,
   className,
   ...props
-}: InputProps) {
-  //TODO: Fix this typescript error
-  //@ts-expect-error: will find some fix for any type
-  const hasError = !!errors[name as any];
-  //@ts-expect-error: will find some fix for any type
-  const errorMessage = errors[name as any]?.message;
+}: InputProps<T>) {
+  const hasError = errors[name as keyof T] !== undefined;
+  const errorMessage = errors[name as keyof T]?.message;
 
   return (
     <div className="flex flex-col gap-2">
@@ -52,7 +48,7 @@ export function Input({
         )}
         <input
           id={name}
-          {...register(name as Path<CreateProfileSchema>)}
+          {...register(name as Path<T>)}
           placeholder={placeholder}
           {...props}
           aria-invalid={hasError}

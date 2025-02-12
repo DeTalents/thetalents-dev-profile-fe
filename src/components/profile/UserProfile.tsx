@@ -1,4 +1,5 @@
 import { getProgramInfo } from '@/utils/helpers/programUtils';
+import { AndelaProgram, NonAndelaProgram } from '@/utils/types';
 import { BasicInfo } from './edit/BasicInfo';
 import { Experience } from './edit/Experience';
 import { ProfileImage } from './edit/ProfileImage';
@@ -7,6 +8,7 @@ import { References } from './edit/References';
 import { Skills } from './edit/Skills';
 
 export interface Experience {
+  id: string;
   role: string;
   company: string;
   endDate?: string;
@@ -15,6 +17,7 @@ export interface Experience {
 }
 
 export interface Reference {
+  id: string;
   name: string;
   email: string;
   phoneNumber: string;
@@ -36,7 +39,7 @@ export interface ProfileData {
     references: Reference[];
     nonAndelaProgram?: string;
     nonAndelaProgramYear?: string;
-    yearsOfExperience: number;
+    yearsOfExperience: string;
     isVerified: boolean;
     createdAt: string;
     updatedAt: string;
@@ -77,11 +80,13 @@ const UserProfile = ({ profileData }: UserProfileProps) => {
           />
         </div>
       </div>
-
       {programInfo.show && (
         <ProgramInfo
           programName={programInfo.programName ?? ''}
           programYear={programInfo.programYear}
+          isAndelan={data.isAndelan as AndelaProgram}
+          nonAndelaProgram={data.nonAndelaProgram as NonAndelaProgram}
+          nonAndelaProgramYear={data.nonAndelaProgramYear}
         />
       )}
 

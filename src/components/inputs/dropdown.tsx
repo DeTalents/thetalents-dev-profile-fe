@@ -1,19 +1,19 @@
-import { CreateProfileSchema } from '@/validations/createProfile';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentPropsWithoutRef } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, Path, UseFormRegister } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 
-interface DropdownProps
+interface DropdownProps<T extends Record<string, any>>
   extends Omit<ComponentPropsWithoutRef<'select'>, 'name'> {
   label: string;
   placeholder?: string;
-  register: UseFormRegister<CreateProfileSchema>;
-  name: keyof CreateProfileSchema & string;
-  errors: FieldErrors<CreateProfileSchema>;
+  register: UseFormRegister<T>;
+  name: Path<T>;
+  errors: FieldErrors<T>;
   options: { value: string; label: string }[];
 }
 
-export function DropdownInput({
+export function DropdownInput<T extends Record<string, any>>({
   label,
   placeholder,
   register,
@@ -21,7 +21,7 @@ export function DropdownInput({
   errors,
   options,
   ...props
-}: DropdownProps) {
+}: DropdownProps<T>) {
   const hasError = !!errors[name];
 
   return (
@@ -58,7 +58,9 @@ export function DropdownInput({
         </select>
       </div>
       {hasError && (
-        <p className="text-red-500 text-sm">{errors[name]?.message}</p>
+        <p className="text-red-500 text-sm">
+          {String(errors[name]?.message || '')}
+        </p>
       )}
     </div>
   );

@@ -1,3 +1,4 @@
+import { andelaOptions, nonAndelaOptions } from '@/utils/enum';
 import formatProgramName from '@/utils/formatProgramName';
 import { maskPhoneNumber } from '@/utils/masks';
 import { CreateProfileSchema } from '@/validations/createProfile';
@@ -10,19 +11,6 @@ export function StepOne() {
   const methods = useFormContext<CreateProfileSchema>();
   const isAndelanValue = methods.watch('isAndelan');
   const nonAndelaProgramValue = methods.watch('nonAndelaProgram');
-
-  const andelaOptions = [
-    { label: 'Andela before 2020', value: 'ANDELA_2020' },
-    { label: 'ATLP/stackup', value: 'ATLP_STACKUP' },
-    { label: 'No', value: 'NONE' },
-  ];
-  const nonAndelaOptions = [
-    { label: 'Amalitech', value: 'AMALITECH' },
-    { label: 'The Gym', value: 'THE_GYM' },
-    { label: 'Awesomity', value: 'AWESOMITY' },
-    { label: 'Solvit Africa', value: 'SOLVIT_AFRICA' },
-    { label: 'None of the above', value: 'NONE' },
-  ];
 
   //Reset nonAndelaProgram just in case user decided to select andela program back to No
   useEffect(() => {
