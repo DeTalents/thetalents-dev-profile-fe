@@ -1,3 +1,4 @@
+import formatProgramName from '@/utils/formatProgramName';
 import { AndelaProgram, NonAndelaProgram } from '@/utils/types';
 import { GraduationCapIcon, PencilIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -47,7 +48,7 @@ export const ProgramInfo = ({
       <div className="space-y-3">
         <div className="flex items-center">
           <span className="text-gray-900">
-            {programName}
+            {formatProgramName(programName)}
             {programYear && ` (${programYear})`}
           </span>
         </div>

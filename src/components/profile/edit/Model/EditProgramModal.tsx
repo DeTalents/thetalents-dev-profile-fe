@@ -1,8 +1,9 @@
 import { DropdownInput } from '@/components/inputs/dropdown';
+import { useUpdateProgramInfoMutation } from '@/features/api/profileApi';
 import { andelaOptions, nonAndelaOptions } from '@/utils/enum';
 import formatProgramName from '@/utils/formatProgramName';
 import { ProgramInfoFormData } from '@/utils/types';
-import { Modal } from 'antd';
+import { message, Modal } from 'antd';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../input';
@@ -18,6 +19,7 @@ const EditProgramModal = ({
   onClose,
   defaultValues,
 }: EditProgramModalProps) => {
+  const [updateProgramInfo, { isLoading }] = useUpdateProgramInfoMutation();
   const {
     register,
     handleSubmit,
@@ -41,9 +43,15 @@ const EditProgramModal = ({
     }
   }, [isAndelanValue, reset, watch]);
 
-  const handleFormSubmit = (data: ProgramInfoFormData) => {
-    console.log(data);
-    onClose();
+  const handleFormSubmit = async (data: ProgramInfoFormData) => {
+    try {
+      await updateProgramInfo(data).unwrap();
+      message.success('Profile updated successfully');
+      onClose();
+    } catch (error) {
+      message.error('Failed to update profile');
+      console.error('Update error:', error);
+    }
   };
 
   return (
@@ -54,6 +62,7 @@ const EditProgramModal = ({
       okText="Save Changes"
       cancelText="Cancel"
       onOk={handleSubmit(handleFormSubmit)}
+      confirmLoading={isLoading}
       width={600}
       destroyOnClose
     >
