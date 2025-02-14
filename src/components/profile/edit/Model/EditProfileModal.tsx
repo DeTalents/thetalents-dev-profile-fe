@@ -1,3 +1,5 @@
+'use client';
+
 import { Textarea } from '@/components/inputs/textarea';
 import { useUpdateProfileMutation } from '@/features/api/profileApi';
 import { UpdateBasicDetails } from '@/utils/types';
@@ -93,6 +95,7 @@ const EditProfileModal = ({
           name="summary"
           errors={errors}
           placeholder="Enter your summary"
+          enableAI={true}
         />
       </form>
     </Modal>
