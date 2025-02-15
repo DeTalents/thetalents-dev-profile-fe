@@ -31,6 +31,7 @@ export interface ProfileData {
     userId: string;
     firstName: string;
     secondName: string;
+    mainTitle: string;
     phone: string;
     summary: string;
     experience: Experience[];
@@ -77,6 +78,7 @@ const UserProfile = ({ profileData }: UserProfileProps) => {
             yearsOfExperience={data.yearsOfExperience}
             summary={data.summary}
             isVerified={data.isVerified}
+            mainTitle={data.mainTitle}
           />
         </div>
       </div>

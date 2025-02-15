@@ -88,6 +88,15 @@ const EditProfileModal = ({
             placeholder="Enter years of experience"
           />
         </div>
+        <div className="grid grid-cols-2 gap-6">
+          <Input
+            label="Your title"
+            register={register}
+            name="mainTitle"
+            errors={errors}
+            placeholder="Senior Software developer, DevOps Engineer"
+          />
+        </div>
 
         <Textarea
           label="Summary"
