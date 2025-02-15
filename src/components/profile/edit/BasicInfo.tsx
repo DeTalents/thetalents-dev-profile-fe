@@ -65,7 +65,7 @@ export const BasicInfo = ({
             className="p-2 text-gray-500 hover:text-indigo-600 transition-colors"
             onClick={() => setIsModalOpen(true)}
           >
-            <PencilIcon className="w-4 h-4" />
+            <PencilIcon className="w-5 h-5" />
           </button>
         </div>
         <p className="text-gray-600 leading-relaxed">{summary}</p>
