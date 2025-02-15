@@ -34,7 +34,7 @@ export interface ProfileData {
     mainTitle: string;
     phone: string;
     summary: string;
-    experience: Experience[];
+    experiences: Experience[];
     skills: string[];
     isAndelan: string;
     references: Reference[];
@@ -61,6 +61,8 @@ const UserProfile = ({ profileData }: UserProfileProps) => {
     data.nonAndelaProgram,
     data.nonAndelaProgramYear
   );
+
+  console.log('++++++', data.experiences);
 
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-6">
@@ -92,7 +94,7 @@ const UserProfile = ({ profileData }: UserProfileProps) => {
         />
       )}
 
-      <Experience experiences={data.experience} />
+      <Experience experiences={data.experiences} />
       <Skills skills={data.skills} />
       <References references={data.references} />
     </div>
