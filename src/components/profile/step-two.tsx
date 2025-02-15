@@ -16,6 +16,7 @@ export function StepTwo() {
           register={methods.register}
           name="summary"
           errors={methods.formState.errors}
+          enableAI={true}
           placeholder="Tell us more about yourself"
         />
       </div>

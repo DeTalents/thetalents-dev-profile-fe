@@ -35,7 +35,7 @@ export const ProgramInfo = ({
         <div className="flex items-center gap-2">
           <GraduationCapIcon className="w-6 h-6 text-indigo-600" />
           <h2 className="text-xl font-bold text-gray-900">
-            Program Information
+            Professional Coding Bootcamp
           </h2>
         </div>
         <button

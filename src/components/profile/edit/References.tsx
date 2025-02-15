@@ -75,10 +75,12 @@ export const References = ({ references, onUpdate }: ReferencesProps) => {
                       <Mail className="w-4 h-4" />
                       {ref.email}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <PhoneIcon className="w-4 h-4" />
-                      {ref.phoneNumber}
-                    </div>
+                    {ref.phoneNumber && (
+                      <div className="flex items-center gap-2">
+                        <PhoneIcon className="w-4 h-4" />
+                        {ref.phoneNumber}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
