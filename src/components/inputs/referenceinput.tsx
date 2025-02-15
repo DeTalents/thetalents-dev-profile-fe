@@ -83,6 +83,14 @@ export function ReferencesSection() {
                 icon={<Mail className="text-zinc-500" size={18} />}
               />
               <Input
+                label="Relationship"
+                register={register}
+                name={`references.${index}.relationship`}
+                errors={errors}
+                placeholder="Your relationship with this reference"
+                icon={<Users className="text-zinc-500" size={18} />}
+              />
+              <Input
                 label="Phone Number"
                 register={register}
                 name={`references.${index}.phoneNumber`}
@@ -90,14 +98,6 @@ export function ReferencesSection() {
                 type="tel"
                 placeholder="Reference phone number"
                 icon={<Phone className="text-zinc-500" size={18} />}
-              />
-              <Input
-                label="Relationship"
-                register={register}
-                name={`references.${index}.relationship`}
-                errors={errors}
-                placeholder="Your relationship with this reference"
-                icon={<Users className="text-zinc-500" size={18} />}
               />
             </div>
           </div>

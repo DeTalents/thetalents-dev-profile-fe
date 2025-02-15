@@ -35,7 +35,7 @@ const experienceSchema = z
 const refenceSchema = z.object({
   name: z.string().min(1, 'Reference name is required'),
   email: z.string().email('Invalid email address'),
-  phoneNumber: z.string().min(10, 'Phone number is required'),
+  phoneNumber: z.string().optional(),
   relationship: z.string().min(1, 'Relationship is required'),
 });
 
@@ -43,6 +43,7 @@ const createProfileSchema = z
   .object({
     firstName: z.string().min(1, 'First name is required'),
     secondName: z.string().min(1, 'Last name is required'),
+    mainTitle: z.string().min(1, 'Main title is required'),
     phone: z.string().min(10, 'Phone number is required'),
     isAndelan: z.enum(PROGRAM_OPTIONS, {
       errorMap: () => ({ message: 'Please select a program' }),

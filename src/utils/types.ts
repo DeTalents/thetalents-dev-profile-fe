@@ -15,6 +15,7 @@ export interface ProgramInfoFormData {
 export type BasicDetails = {
   firstName: string;
   secondName: string;
+  mainTitle: string;
   phone: string;
   yearsOfExperience: string;
   summary: string;

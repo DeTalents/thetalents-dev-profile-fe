@@ -12,10 +12,8 @@ export function StepOne() {
   const isAndelanValue = methods.watch('isAndelan');
   const nonAndelaProgramValue = methods.watch('nonAndelaProgram');
 
-  //Reset nonAndelaProgram just in case user decided to select andela program back to No
   useEffect(() => {
     if (isAndelanValue !== 'NONE') {
-      // Batch the updates to prevent multiple re-renders
       methods.reset({
         ...methods.getValues(),
         nonAndelaProgram: undefined,
@@ -57,6 +55,15 @@ export function StepOne() {
           maxLength={16}
           placeholder="(123) 456 - 7890"
         />
+        <Input
+          label="Your Title"
+          register={methods.register}
+          name="mainTitle"
+          errors={methods.formState.errors}
+          placeholder="Senior Software developer...."
+        />
+      </div>
+      <div className="flex gap-7">
         <DropdownInput
           label="Have you been in Andela"
           options={andelaOptions}
@@ -65,36 +72,37 @@ export function StepOne() {
           errors={methods.formState.errors}
           placeholder="Select andela program"
         />
-      </div>
-      <div className="flex flex-col gap-7">
-        {isAndelanValue === 'NONE' && (
-          <>
-            <DropdownInput
-              label="If no Andela, have been through"
-              options={nonAndelaOptions}
-              register={methods.register}
-              name="nonAndelaProgram"
-              errors={methods.formState.errors}
-              placeholder="Select program"
-            />
 
-            {nonAndelaProgramValue && nonAndelaProgramValue !== 'NONE' && (
-              <Input
-                label={`Which year did you attend "${formatProgramName(
-                  nonAndelaProgramValue
-                )}"?`}
-                register={methods.register}
-                name="nonAndelaProgramYear"
-                errors={methods.formState.errors}
-                placeholder="2016-2029"
-                type="number"
-                min="2016"
-                max="2029"
-              />
-            )}
-          </>
+        {isAndelanValue === 'NONE' && (
+          <DropdownInput
+            label="If no Andela, have been through"
+            options={nonAndelaOptions}
+            register={methods.register}
+            name="nonAndelaProgram"
+            errors={methods.formState.errors}
+            placeholder="Select program"
+          />
         )}
       </div>
+
+      {isAndelanValue === 'NONE' &&
+        nonAndelaProgramValue &&
+        nonAndelaProgramValue !== 'NONE' && (
+          <div className="flex">
+            <Input
+              label={`Which year did you attend "${formatProgramName(
+                nonAndelaProgramValue
+              )}"?`}
+              register={methods.register}
+              name="nonAndelaProgramYear"
+              errors={methods.formState.errors}
+              placeholder="2016-2029"
+              type="number"
+              min="2016"
+              max="2029"
+            />
+          </div>
+        )}
     </>
   );
 }
