@@ -1,7 +1,12 @@
 // features/api/apiSlice.ts
 import { RootState } from '@/store/store';
 import { getCookie } from '@/utils/cookieUtils';
-import { CreateProfileSchema } from '@/validations/createProfile';
+import {
+  DeveloperProfile,
+  DeveloperProfilesResponse,
+  DeveloperQueryParams,
+  ProfileResponseData,
+} from '@/utils/types';
 import {
   BaseQueryFn,
   createApi,
@@ -42,21 +47,56 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
   return result;
 };
 
-export interface ProfileResponseData {
-  message: string;
-  data: CreateProfileSchema;
-}
-
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Profile'],
+  tagTypes: ['Profile', 'PublicProfiles'],
   endpoints: (builder) => ({
+    // Existing endpoint
     getDeveloperProfile: builder.query<ProfileResponseData, void>({
       query: () => '/developer-profile',
       providesTags: ['Profile'],
     }),
+
+    getPublicProfiles: builder.query<
+      DeveloperProfilesResponse,
+      DeveloperQueryParams
+    >({
+      query: (params) => {
+        const queryParams = new URLSearchParams();
+        if (params.page) queryParams.append('page', params.page.toString());
+        if (params.limit) queryParams.append('limit', params.limit.toString());
+        if (params.search) queryParams.append('search', params.search);
+        if (params.experience?.length) {
+          params.experience.forEach((exp) =>
+            queryParams.append('experience', exp)
+          );
+        }
+
+        return {
+          url: `/public-profiles?${queryParams.toString()}`,
+          method: 'GET',
+        };
+      },
+      providesTags: ['PublicProfiles'],
+    }),
+
+    getPublicProfileById: builder.query<
+      {
+        success: boolean;
+        message: string;
+        data: DeveloperProfile;
+      },
+      string
+    >({
+      query: (id) => `/public-profiles/${id}`,
+      providesTags: (result, error, id) => [{ type: 'PublicProfiles', id }],
+    }),
   }),
 });
 
-export const { useGetDeveloperProfileQuery } = apiSlice;
+export const {
+  useGetDeveloperProfileQuery,
+  useGetPublicProfilesQuery,
+  useGetPublicProfileByIdQuery,
+} = apiSlice;

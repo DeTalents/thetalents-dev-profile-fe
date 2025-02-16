@@ -37,42 +37,34 @@ export interface Reference {
 }
 
 export interface ProfileData {
-  message: string;
-  data: {
-    id: string;
-    userId: string;
-    firstName: string;
-    secondName: string;
-    mainTitle: string;
-    phone: string;
-    summary: string;
-    experiences: Experience[];
-    skills: string[];
-    isAndelan: string;
-    references: Reference[];
-    nonAndelaProgram?: string;
-    nonAndelaProgramYear?: string;
-    yearsOfExperience: string;
-    isVerified: boolean;
-    createdAt: string;
-    updatedAt: string;
-    user: {
-      email: string;
-    };
+  id: string;
+  userId: string;
+  firstName: string;
+  secondName: string;
+  mainTitle: string;
+  phone: string;
+  summary: string;
+  experiences: Experience[];
+  skills: string[];
+  isAndelan: string;
+  references: Reference[];
+  nonAndelaProgram?: string;
+  nonAndelaProgramYear?: string;
+  yearsOfExperience: string;
+  isVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
+  user: {
+    email: string;
   };
 }
 
-interface UserProfileProps {
-  profileData: ProfileData;
-}
-
-const UserProfile = ({ profileData }: UserProfileProps) => {
+const UserProfile = ({ profileData }: { profileData: ProfileData }) => {
   const [activeTab, setActiveTab] = useState('profile');
-  const { data } = profileData;
   const programInfo = getProgramInfo(
-    data.isAndelan,
-    data.nonAndelaProgram,
-    data.nonAndelaProgramYear
+    profileData.isAndelan,
+    profileData.nonAndelaProgram,
+    profileData.nonAndelaProgramYear
   );
 
   const renderHome = () => (
@@ -91,15 +83,18 @@ const UserProfile = ({ profileData }: UserProfileProps) => {
           <div className="space-y-4">
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
               <span className="text-gray-600">Experience Level</span>
-              <Badge color="blue" count={`${data.yearsOfExperience} years`} />
+              <Badge
+                color="blue"
+                count={`${profileData.yearsOfExperience} years`}
+              />
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
               <span className="text-gray-600">Total Skills</span>
-              <Badge color="green" count={data.skills.length} />
+              <Badge color="green" count={profileData.skills.length} />
             </div>
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
               <span className="text-gray-600">References</span>
-              <Badge color="purple" count={data.references.length} />
+              <Badge color="purple" count={profileData.references.length} />
             </div>
           </div>
         </div>
@@ -167,19 +162,19 @@ const UserProfile = ({ profileData }: UserProfileProps) => {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
         <div className="flex items-start gap-6">
           <ProfileImage
-            firstName={data.firstName}
-            secondName={data.secondName}
+            firstName={profileData.firstName}
+            secondName={profileData.secondName}
           />
           <div className="flex-grow">
             <BasicInfo
-              firstName={data.firstName}
-              secondName={data.secondName}
-              email={data.user?.email}
-              phone={data.phone}
-              yearsOfExperience={data.yearsOfExperience}
-              summary={data.summary}
-              isVerified={data.isVerified}
-              mainTitle={data.mainTitle}
+              firstName={profileData.firstName}
+              secondName={profileData.secondName}
+              email={profileData.user?.email}
+              phone={profileData.phone}
+              yearsOfExperience={profileData.yearsOfExperience}
+              summary={profileData.summary}
+              isVerified={profileData.isVerified}
+              mainTitle={profileData.mainTitle}
             />
           </div>
         </div>
@@ -194,26 +189,28 @@ const UserProfile = ({ profileData }: UserProfileProps) => {
               <ProgramInfo
                 programName={programInfo.programName ?? ''}
                 programYear={programInfo.programYear}
-                isAndelan={data.isAndelan as AndelaProgram}
-                nonAndelaProgram={data.nonAndelaProgram as NonAndelaProgram}
-                nonAndelaProgramYear={data.nonAndelaProgramYear}
+                isAndelan={profileData.isAndelan as AndelaProgram}
+                nonAndelaProgram={
+                  profileData.nonAndelaProgram as NonAndelaProgram
+                }
+                nonAndelaProgramYear={profileData.nonAndelaProgramYear}
               />
             </div>
           )}
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <Experience experiences={data.experiences} />
+            <Experience experiences={profileData.experiences} />
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <References references={data.references} />
+            <References references={profileData.references} />
           </div>
         </div>
 
         {/* Right Column */}
         <div className="space-y-6">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <Skills skills={data.skills} />
+            <Skills skills={profileData.skills} />
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">

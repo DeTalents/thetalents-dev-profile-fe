@@ -1,6 +1,7 @@
+'use client';
+
 import { andelaOptions, nonAndelaOptions } from '@/utils/enum';
 import formatProgramName from '@/utils/formatProgramName';
-import { maskPhoneNumber } from '@/utils/masks';
 import { CreateProfileSchema } from '@/validations/createProfile';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -49,9 +50,6 @@ export function StepOne() {
           register={methods.register}
           name="phone"
           errors={methods.formState.errors}
-          onChange={(e) =>
-            methods.setValue('phone', maskPhoneNumber(e.target.value))
-          }
           maxLength={16}
           placeholder="(123) 456 - 7890"
         />

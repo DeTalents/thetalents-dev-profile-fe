@@ -1,4 +1,7 @@
 'use strict';
+import type { DeveloperProfile as DeveloperProfileType } from '@/app/profiles/page';
+import { formatDate } from '@/utils/formatDate';
+import formatProgramName from '@/utils/formatProgramName';
 import { Breadcrumb, Button, Tooltip } from 'antd';
 import { motion } from 'framer-motion';
 import {
@@ -13,32 +16,8 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-interface Experience {
-  role: string;
-  company: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-}
-
-interface Experience {
-  role: string;
-  company: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-}
-
-const DeveloperProfile = ({ profile }) => {
+const DeveloperProfile = ({ profile }: { profile: DeveloperProfileType }) => {
   const router = useRouter();
-  const { data } = profile;
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      year: 'numeric',
-    });
-  };
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -57,7 +36,7 @@ const DeveloperProfile = ({ profile }) => {
           <Breadcrumb
             items={[
               { title: <Link href="/profile">Talents</Link> },
-              { title: `${data.firstName} ${data.secondName}` },
+              { title: `${profile.firstName} ${profile.secondName}` },
             ]}
             className="text-sm"
           />
@@ -81,13 +60,13 @@ const DeveloperProfile = ({ profile }) => {
                   <div className="relative inline-block">
                     <div className="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
                       <span className="text-indigo-600 text-3xl font-medium">
-                        {data.firstName[0]}
-                        {data.secondName[0]}
+                        {profile.firstName[0]}
+                        {profile.secondName[0]}
                       </span>
                     </div>
                     <Tooltip
                       title={
-                        data.isVerified
+                        profile.isVerified
                           ? 'Verified Profile'
                           : 'Unverified Profile'
                       }
@@ -100,34 +79,19 @@ const DeveloperProfile = ({ profile }) => {
                       >
                         <Award
                           className={`w-5 h-5 ${
-                            data.isVerified ? 'text-green-600' : 'text-red-500'
+                            profile.isVerified
+                              ? 'text-green-600'
+                              : 'text-red-500'
                           }`}
                         />
                       </motion.div>
                     </Tooltip>
                   </div>
-                  {/* <div className="relative inline-block">
-                    <div className="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                      <span className="text-indigo-600 text-3xl font-medium">
-                        {data.firstName[0]}
-                        {data.secondName[0]}
-                      </span>
-                    </div>
-                    {data.isVerified && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="absolute -right-4 bottom-4 bg-white rounded-full p-1 shadow-md"
-                      >
-                        <Award className="w-5 h-5 text-green-600" />
-                      </motion.div>
-                    )}
-                  </div> */}
 
                   {/* Name and Role */}
                   <div className="space-y-2">
                     <h2 className="text-2xl font-bold text-gray-900">
-                      {data.firstName} {data.secondName}
+                      {profile.firstName} {profile.secondName}
                     </h2>
                     <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 text-sm font-medium rounded-full">
                       Senior Software Engineer
@@ -139,7 +103,7 @@ const DeveloperProfile = ({ profile }) => {
                     <div className="flex items-center justify-center gap-2">
                       <Clock className="w-4 h-4 text-indigo-600" />
                       <span className="text-indigo-600 font-medium">
-                        {data.yearsOfExperience} Years of Experience
+                        {profile.yearsOfExperience} Years of Experience
                       </span>
                     </div>
                   </div>
@@ -149,11 +113,11 @@ const DeveloperProfile = ({ profile }) => {
                 <div className="space-y-3">
                   <div className="flex items-center text-gray-600">
                     <Mail className="w-4 h-4 mr-2" />
-                    <span className="text-sm">{data.user.email}</span>
+                    <span className="text-sm">{profile.user.email}</span>
                   </div>
                   <div className="flex items-center text-gray-600">
                     <Phone className="w-4 h-4 mr-2" />
-                    <span className="text-sm">{data.phone}</span>
+                    <span className="text-sm">{profile.phone}</span>
                   </div>
                 </div>
 
@@ -161,7 +125,7 @@ const DeveloperProfile = ({ profile }) => {
                 <div className="space-y-3">
                   <h3 className="font-semibold text-gray-900">Skills</h3>
                   <div className="flex flex-wrap gap-2">
-                    {data.skills.map((skill) => (
+                    {profile.skills.map((skill) => (
                       <span
                         key={skill}
                         className="px-3 py-1 rounded-full text-sm border border-indigo-200 bg-indigo-50 text-indigo-600"
@@ -189,14 +153,14 @@ const DeveloperProfile = ({ profile }) => {
               className="bg-white rounded-lg border border-gray-200 shadow-sm p-6"
             >
               <h3 className="text-xl font-semibold mb-4">About</h3>
-              <p className="text-gray-600 leading-relaxed">{data.summary}</p>
+              <p className="text-gray-600 leading-relaxed">{profile.summary}</p>
             </motion.div>
 
             {/* Experience Section */}
             <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
               <h3 className="text-xl font-semibold mb-6">Experience</h3>
               <div className="space-y-6">
-                {data.experience.map((exp: Experience, index: number) => (
+                {profile.experiences.map((exp, index: number) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
@@ -227,7 +191,7 @@ const DeveloperProfile = ({ profile }) => {
                 Professional References
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {data.references.map((ref: Reference, index: number) => (
+                {profile.references.map((ref, index: number) => (
                   <motion.div
                     key={index}
                     whileHover={{ scale: 1.02 }}
@@ -264,19 +228,28 @@ const DeveloperProfile = ({ profile }) => {
             </div>
 
             {/* Additional Info */}
-            {data.nonAndelaProgram && (
-              <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-4">
-                    Additional Information
-                  </h3>
-                  <p className="text-gray-600">
-                    Program: {data.nonAndelaProgram} (
-                    {data.nonAndelaProgramYear})
-                  </p>
+            <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-4">
+                  Professional Coding Bootcamp
+                </h3>
+                <div className="space-y-2">
+                  {profile.isAndelan === 'NONE' ? (
+                    profile.nonAndelaProgram && (
+                      <p className="text-gray-600">
+                        {formatProgramName(profile.nonAndelaProgram)}
+                        {profile.nonAndelaProgramYear &&
+                          ` (${profile.nonAndelaProgramYear})`}
+                      </p>
+                    )
+                  ) : (
+                    <p className="text-gray-600">
+                      {formatProgramName(profile.isAndelan)}
+                    </p>
+                  )}
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

@@ -67,6 +67,7 @@ export function Form() {
 
   async function onSubmit(data: CreateProfileSchema) {
     try {
+      console.log('++++', data);
       await createProfile(data).unwrap();
       showToast.success('Profile created successfully!');
       methods.reset();
