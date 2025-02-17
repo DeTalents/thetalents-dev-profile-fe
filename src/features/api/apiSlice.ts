@@ -1,5 +1,6 @@
 // features/api/apiSlice.ts
 import { RootState } from '@/store/store';
+import { experienceLevels } from '@/utils/constants';
 import { getCookie } from '@/utils/cookieUtils';
 import {
   DeveloperProfile,
@@ -67,10 +68,33 @@ export const apiSlice = createApi({
         if (params.page) queryParams.append('page', params.page.toString());
         if (params.limit) queryParams.append('limit', params.limit.toString());
         if (params.search) queryParams.append('search', params.search);
+        // Handle experience filtering
         if (params.experience?.length) {
-          params.experience.forEach((exp) =>
-            queryParams.append('experience', exp)
-          );
+          const selectedRanges = params.experience
+            .map((exp) => experienceLevels.find((level) => level.value === exp))
+            .filter(Boolean);
+
+          if (selectedRanges.length > 0) {
+            // Find min and max experience across all selected ranges
+            const minExp = Math.min(
+              ...selectedRanges.map((range) => range?.minExp ?? Infinity)
+            );
+
+            const maxExps = selectedRanges
+              .map((range) => range?.maxExp)
+              .filter((max): max is number => max !== null);
+
+            const maxExp =
+              maxExps.length > 0 ? Math.max(...maxExps) : undefined;
+
+            if (minExp !== Infinity) {
+              queryParams.append('minExperience', minExp.toString());
+            }
+
+            if (maxExp !== undefined) {
+              queryParams.append('maxExperience', maxExp.toString());
+            }
+          }
         }
 
         return {

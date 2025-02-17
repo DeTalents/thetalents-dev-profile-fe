@@ -4,148 +4,25 @@ import DeveloperCard from '@/components/talents/DeveloperCard';
 import { DeveloperFilters } from '@/components/talents/DeveloperFilters';
 import { DeveloperPagination } from '@/components/talents/DeveloperPagination';
 import { DevelopersHeader } from '@/components/talents/DevelopersHeader';
-import { SearchHeader } from '@/components/talents/SearchHeader';
+import { EmptyState } from '@/components/talents/EmptyState';
+import { LoadingState } from '@/components/talents/LoadingState';
+import { TalentsHeader } from '@/components/talents/TalentHeader';
 import { useGetPublicProfilesQuery } from '@/features/api/apiSlice';
+import { Users } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-type Reference = {
-  id: string;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  relationship: string;
-};
-
-type Experience = {
-  id: string;
-  company: string;
-  role: string;
-  description: string;
-  startDate: string; // ISO date string
-  endDate: string | null; // ISO date string or null
-};
-
-type User = {
-  email: string;
-};
-
-export type DeveloperProfile = {
-  id: string;
-  userId: string;
-  firstName: string;
-  secondName: string;
-  mainTitle: string;
-  phone: string;
-  summary: string;
-  skills: string[];
-  isAndelan: string;
-  references: Reference[];
-  nonAndelaProgram: string | null;
-  nonAndelaProgramYear: number | null;
-  yearsOfExperience: number;
-  isVerified: boolean;
-  createdAt: string; // ISO date string
-  updatedAt: string; // ISO date string
-  user: User;
-  experiences: Experience[];
-};
-
-type Pagination = {
-  totalItems: number;
-  currentPage: number;
-  pageSize: number;
-  totalPages: number;
-};
-
-export type DeveloperProfilesResponse = {
-  success: boolean;
-  message: string;
-  data: DeveloperProfile[];
-  pagination: Pagination;
-};
-// function DeveloperInformation() {
-//   const [selectedExperience, setSelectedExperience] = useState<string[]>([]);
-//   const [isFilterOpen, setIsFilterOpen] = useState(false);
-//   const [viewMode, setViewMode] = useState<'grid' | 'compact'>('grid');
-//   const [searchQuery, setSearchQuery] = useState('');
-
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const pageSize = 8; // Number of cards per page
-//   const totalDevelopers = 25;
-
-//   const handlePageChange = (page: number) => {
-//     setCurrentPage(page);
-//     // Here you would typically fetch new data for the page
-//     window.scrollTo({ top: 0, behavior: 'smooth' });
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-50">
-//       <SearchHeader onSearch={setSearchQuery} />
-//       <div className="max-w-7xl mx-auto px-8 pt-3">
-//         <div className="flex gap-8">
-//           <div
-//             className={`transition-all duration-300 overflow-hidden ${
-//               isFilterOpen ? 'w-80 opacity-100' : 'w-0 opacity-0'
-//             }`}
-//           >
-//             {isFilterOpen && (
-//               <DeveloperFilters
-//                 selectedExperience={selectedExperience}
-//                 onExperienceChange={setSelectedExperience}
-//               />
-//             )}
-//           </div>
-//           <div className="flex-1">
-//             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-[fit-content]">
-//               <DevelopersHeader
-//                 totalDevelopers={totalDevelopers}
-//                 isFilterOpen={isFilterOpen}
-//                 onToggleFilter={() => setIsFilterOpen(!isFilterOpen)}
-//                 viewMode={viewMode}
-//                 onViewModeChange={setViewMode}
-//               />
-//             </div>
-//             <div className="mt-6">
-//               <div
-//                 className={`grid gap-6 ${
-//                   viewMode === 'grid'
-//                     ? 'grid-cols-1 md:grid-cols-2'
-//                     : 'grid-cols-1 md:grid-cols-3'
-//                 }`}
-//               >
-//                 <DeveloperCard profile={mockProfileData} />
-//                 <DeveloperCard profile={mockProfileData} />
-//                 <DeveloperCard profile={mockProfileData} />
-//                 <DeveloperCard profile={mockProfileData} />
-//               </div>
-//               <DeveloperPagination
-//                 current={currentPage}
-//                 total={totalDevelopers}
-//                 pageSize={pageSize}
-//                 onChange={handlePageChange}
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default DeveloperInformation;
 
 function DeveloperInformation() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Get initial values from URL
+  // URL Parameters
   const initialPage = parseInt(searchParams.get('page') || '1');
   const initialLimit = parseInt(searchParams.get('limit') || '8');
   const initialSearch = searchParams.get('search') || '';
   const initialExperience = searchParams.getAll('experience');
 
+  // State Management
   const [selectedExperience, setSelectedExperience] =
     useState<string[]>(initialExperience);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -154,7 +31,7 @@ function DeveloperInformation() {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const pageSize = initialLimit;
 
-  // RTK Query hook
+  // Fetch Data
   const { data, isLoading, error } = useGetPublicProfilesQuery({
     page: currentPage,
     limit: pageSize,
@@ -162,9 +39,7 @@ function DeveloperInformation() {
     experience: selectedExperience,
   });
 
-  console.log('data++++', data);
-
-  // Update URL when parameters change
+  // URL Management
   useEffect(() => {
     const params = new URLSearchParams();
     params.set('page', currentPage.toString());
@@ -173,34 +48,103 @@ function DeveloperInformation() {
     selectedExperience.forEach((exp) => params.append('experience', exp));
 
     router.push(`?${params.toString()}`, { scroll: false });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, pageSize, searchQuery, selectedExperience]);
+  }, [currentPage, pageSize, searchQuery, selectedExperience, router]);
 
+  // Event Handlers
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    setCurrentPage(1); // Reset to first page on new search
-  };
+  // const handleSearch = (query: string) => {
+  //   setSearchQuery(query);
+  //   setCurrentPage(1);
+  // };
 
   const handleExperienceChange = (experience: string[]) => {
     setSelectedExperience(experience);
-    setCurrentPage(1); // Reset to first page on filter change
+    setCurrentPage(1);
   };
 
-  if (error) {
-    return <div className="text-center py-8">Error loading developers</div>;
-  }
+  // Render Helpers
+  const renderContent = () => {
+    if (isLoading) {
+      return <LoadingState />;
+    }
 
+    if (error) {
+      return (
+        <EmptyState
+          icon={<Users className="w-12 h-12 text-gray-400" />}
+          title="Error loading developers"
+          description="There was an error loading the developers. Please try again later."
+          action={{
+            label: 'Retry',
+            onClick: () => window.location.reload(),
+          }}
+        />
+      );
+    }
+
+    if (!data?.data.length) {
+      return (
+        <EmptyState
+          icon={<Users className="w-12 h-12 text-gray-400" />}
+          title="No developers found"
+          description={
+            searchQuery || selectedExperience.length > 0
+              ? 'No developers match your search criteria. Try adjusting your filters.'
+              : 'There are no developers registered yet.'
+          }
+          action={
+            searchQuery || selectedExperience.length > 0
+              ? {
+                  label: 'Clear filters',
+                  onClick: () => {
+                    setSearchQuery('');
+                    setSelectedExperience([]);
+                    setCurrentPage(1);
+                  },
+                }
+              : undefined
+          }
+        />
+      );
+    }
+
+    return (
+      <>
+        <div
+          className={`grid gap-6 ${
+            viewMode === 'grid'
+              ? 'grid-cols-1 md:grid-cols-2'
+              : 'grid-cols-1 md:grid-cols-3'
+          }`}
+        >
+          {data.data.map((profile) => (
+            <DeveloperCard key={profile.id} profile={profile} />
+          ))}
+        </div>
+        <DeveloperPagination
+          current={currentPage}
+          total={data.pagination.totalItems}
+          pageSize={pageSize}
+          onChange={handlePageChange}
+        />
+      </>
+    );
+  };
+
+  // Component Layout
   return (
     <div className="min-h-screen bg-gray-50">
-      <SearchHeader onSearch={handleSearch} initialValue={searchQuery} />
-      <div className="max-w-7xl mx-auto px-8 pt-3">
+      {/* <SearchHeader onSearch={handleSearch} initialValue={searchQuery} /> */}
+      <TalentsHeader />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex gap-8">
-          <div
+          {/* Sidebar */}
+          <aside
             className={`transition-all duration-300 overflow-hidden ${
               isFilterOpen ? 'w-80 opacity-100' : 'w-0 opacity-0'
             }`}
@@ -211,9 +155,11 @@ function DeveloperInformation() {
                 onExperienceChange={handleExperienceChange}
               />
             )}
-          </div>
-          <div className="flex-1">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 h-[fit-content]">
+          </aside>
+
+          {/* Main Content */}
+          <main className="flex-1">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
               <DevelopersHeader
                 totalDevelopers={data?.pagination.totalItems || 0}
                 isFilterOpen={isFilterOpen}
@@ -222,32 +168,9 @@ function DeveloperInformation() {
                 onViewModeChange={setViewMode}
               />
             </div>
-            <div className="mt-6">
-              {isLoading ? (
-                <div className="text-center py-8">Loading...</div>
-              ) : (
-                <>
-                  <div
-                    className={`grid gap-6 ${
-                      viewMode === 'grid'
-                        ? 'grid-cols-1 md:grid-cols-2'
-                        : 'grid-cols-1 md:grid-cols-3'
-                    }`}
-                  >
-                    {data?.data.map((profile) => (
-                      <DeveloperCard key={profile.id} profile={profile} />
-                    ))}
-                  </div>
-                  <DeveloperPagination
-                    current={currentPage}
-                    total={data?.pagination.totalItems || 0}
-                    pageSize={pageSize}
-                    onChange={handlePageChange}
-                  />
-                </>
-              )}
-            </div>
-          </div>
+
+            <div className="mt-6">{renderContent()}</div>
+          </main>
         </div>
       </div>
     </div>

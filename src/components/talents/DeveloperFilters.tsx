@@ -1,13 +1,6 @@
+import { experienceLevels } from '@/utils/constants';
 import { Checkbox, Divider } from 'antd';
 import { BadgeCheck } from 'lucide-react';
-
-const experienceLevels = [
-  { label: 'Fresh Graduate', value: 'fresh', count: 0 },
-  { label: '1 - 2 Years', value: '1-2', count: 2 },
-  { label: '3 - 5 Years', value: '3-5', count: 4 },
-  { label: '6 - 8 Years', value: '6-8', count: 1 },
-  { label: '9+ Years', value: '9+', count: 1 },
-];
 
 interface DeveloperFiltersProps {
   selectedExperience: string[];
@@ -67,9 +60,9 @@ export const DeveloperFilters = ({
                       <span className="text-gray-700 font-medium">
                         {level.label}
                       </span>
-                      <span className="ml-2 text-sm text-gray-500">
+                      {/* <span className="ml-2 text-sm text-gray-500">
                         ({level.count})
-                      </span>
+                      </span> */}
                     </div>
                   </Checkbox>
                 </div>

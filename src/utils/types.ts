@@ -34,14 +34,6 @@ export type DeveloperQueryParams = {
   experience?: string[];
 };
 
-export type Reference = {
-  id: string;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  relationship: string;
-};
-
 export type Experience = {
   id: string;
   company: string;
@@ -92,3 +84,15 @@ export interface ProfileResponseData {
   message: string;
   data: CreateProfileSchema;
 }
+
+export type Reference = {
+  id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  relationship: string;
+};
+
+export type User = {
+  email: string;
+};
