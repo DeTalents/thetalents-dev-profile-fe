@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const PROGRAM_OPTIONS = ['ANDELA_2020', 'ATLP_STACKUP', 'NONE'] as const;
 
-const experienceSchema = z
+export const experienceSchema = z
   .object({
     company: z.string().min(1, 'Company name is required'),
     role: z.string().min(1, 'Role is required'),
@@ -90,5 +90,6 @@ const createProfileSchema = z
   });
 
 export type CreateProfileSchema = z.infer<typeof createProfileSchema>;
+export type ExperienceSchema = z.infer<typeof experienceSchema>;
 
 export default createProfileSchema;
