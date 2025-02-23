@@ -137,9 +137,12 @@ const DeveloperProfile = ({ profile }: { profile: DeveloperProfileType }) => {
                 </div>
 
                 {/* Button Component */}
-                <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors duration-200 flex items-center justify-center">
+                <button
+                  disabled
+                  className="w-full bg-gray-200 text-gray-500 py-2 px-4 rounded-md flex items-center justify-center cursor-not-allowed border border-gray-300 opacity-75"
+                >
                   <Send className="w-4 h-4 mr-2" />
-                  Send Job Invitation
+                  Send Interview Invitation
                 </button>
               </div>
             </div>
