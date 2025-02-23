@@ -27,6 +27,7 @@ const steps = [
       'secondName',
       'phone',
       'mainTitle',
+      'isAndelan',
       'nonAndelaProgram',
       'nonAndelaProgramYear',
     ],
