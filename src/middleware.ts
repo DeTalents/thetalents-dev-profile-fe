@@ -4,8 +4,9 @@ import { NextResponse } from 'next/server';
 
 const protectedRoutes = [
   '/profile',
-  '/profile/developer',
-  '/profile/developer/create',
+  '/developer',
+  '/create-profile/client',
+  '/create-profile/developer',
 ];
 const authRoutes = ['/', '/login'];
 
@@ -21,12 +22,12 @@ export function middleware(request: NextRequest) {
 
   // If accessing a protected route without a token, redirect to login
   if (isProtectedRoute && !token) {
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   // If accessing auth routes with a token, redirect to profile
   if (isAuthRoute && token) {
-    return NextResponse.redirect(new URL('/profile/developer', request.url));
+    return NextResponse.redirect(new URL('/developer', request.url));
   }
 
   return NextResponse.next();

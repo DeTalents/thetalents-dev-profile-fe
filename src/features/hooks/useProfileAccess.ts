@@ -13,9 +13,9 @@ interface UseProfileAccessOptions {
 export function useProfileAccess(options: UseProfileAccessOptions = {}) {
   const {
     redirectIfProfileExists = true,
-    redirectTo = '/profile/developer',
+    redirectTo = '/developer',
     redirectIfNoProfile = false,
-    redirectNoProfileTo = '/profile/developer/create',
+    redirectNoProfileTo = '/create-profile/developer',
   } = options;
 
   const router = useRouter();

@@ -53,7 +53,6 @@ export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ['Profile', 'PublicProfiles'],
   endpoints: (builder) => ({
-    // Existing endpoint
     getDeveloperProfile: builder.query<ProfileResponseData, void>({
       query: () => '/developer-profile',
       providesTags: ['Profile'],
@@ -68,14 +67,13 @@ export const apiSlice = createApi({
         if (params.page) queryParams.append('page', params.page.toString());
         if (params.limit) queryParams.append('limit', params.limit.toString());
         if (params.search) queryParams.append('search', params.search);
-        // Handle experience filtering
+
         if (params.experience?.length) {
           const selectedRanges = params.experience
             .map((exp) => experienceLevels.find((level) => level.value === exp))
             .filter(Boolean);
 
           if (selectedRanges.length > 0) {
-            // Find min and max experience across all selected ranges
             const minExp = Math.min(
               ...selectedRanges.map((range) => range?.minExp ?? Infinity)
             );

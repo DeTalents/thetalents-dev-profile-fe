@@ -1,5 +1,5 @@
 const page = () => {
-  return <div>Landing Page</div>;
+  return <div>Create client Profiles</div>;
 };
 
 export default page;

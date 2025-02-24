@@ -1,4 +1,3 @@
-// app/auth/google/page.tsx
 'use client';
 
 import FormSkeleton from '@/components/skeletons/form';
@@ -16,13 +15,12 @@ const GoogleAuthPage = () => {
   const token = searchParams.get('token');
   const [isInitialCheck, setIsInitialCheck] = useState(true);
 
-  // Initialize auth first
   useEffect(() => {
     if (token && isInitialCheck) {
       dispatch(setGoogleAuth(token));
       setIsInitialCheck(false);
     } else if (!token) {
-      router.push('/');
+      router.push('/login');
     }
   }, [token, dispatch, isInitialCheck, router]);
 
@@ -43,13 +41,27 @@ const GoogleAuthPage = () => {
           'status' in error &&
           (error as FetchBaseQueryError).status === 404
         ) {
-          router.push('/profile/developer/create');
+          const userRole = profile?.data?.user?.role;
+
+          console.log('++++🔥userRole', userRole);
+
+          if (userRole === 'client') {
+            router.push('/create-profile/client');
+          } else {
+            router.push('/create-profile/developer');
+          }
         } else {
-          console.error('Error fetching developer profile:', error);
-          router.push('/');
+          console.error('Error fetching profile:', error);
+          router.push('/login');
         }
       } else if (profile) {
-        router.push('/profile/developer');
+        const userRole = profile.data?.user?.role;
+
+        if (userRole === 'client') {
+          router.push('/profiles');
+        } else {
+          router.push('/developer');
+        }
       }
     }
   }, [error, profile, isLoading, isInitialCheck, router]);

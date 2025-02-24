@@ -7,12 +7,33 @@ import { useGetDeveloperProfileQuery } from '@/features/api/apiSlice';
 
 export default function ProfilePage() {
   const { data, isLoading, error } = useGetDeveloperProfileQuery(undefined);
+  const userRole = data?.data.user.role;
 
   if (isLoading) {
     return <ProfileLoadingSkeleton />;
   }
 
   if (error) {
+    const is404 =
+      error &&
+      typeof error === 'object' &&
+      'status' in error &&
+      error.status === 404;
+
+    if (is404) {
+      return (
+        <ProfileNotFound
+          type="notFound"
+          userRole={userRole}
+          createProfilePath={
+            userRole === 'client'
+              ? '/create-profile/client'
+              : '/create-profile/developer'
+          }
+        />
+      );
+    }
+
     return (
       <ProfileNotFound
         type="error"
@@ -26,7 +47,17 @@ export default function ProfilePage() {
   }
 
   if (!data) {
-    return <ProfileNotFound type="notFound" />;
+    return (
+      <ProfileNotFound
+        type="notFound"
+        userRole={userRole}
+        createProfilePath={
+          userRole === 'client'
+            ? '/create-profile/client'
+            : '/create-profile/developer'
+        }
+      />
+    );
   }
 
   return <UserProfile profileData={data.data} />;
