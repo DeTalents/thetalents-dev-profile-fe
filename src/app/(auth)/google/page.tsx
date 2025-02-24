@@ -3,68 +3,63 @@
 import FormSkeleton from '@/components/skeletons/form';
 import { useGetDeveloperProfileQuery } from '@/features/api/apiSlice';
 import { setGoogleAuth } from '@/features/auth/authSlice';
+import { useDecodeToken } from '@/features/hooks/useDecodeToken';
+import { RootState } from '@/store/store';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const GoogleAuthPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const token = searchParams.get('token');
-  const [isInitialCheck, setIsInitialCheck] = useState(true);
+  const stateToken = useSelector((state: RootState) => state.auth.token);
 
+  // Decode user role from token
+  const userRole = useDecodeToken(stateToken);
+
+  // Dispatch token if available
   useEffect(() => {
-    if (token && isInitialCheck) {
+    if (token) {
       dispatch(setGoogleAuth(token));
-      setIsInitialCheck(false);
-    } else if (!token) {
+    } else {
       router.push('/login');
     }
-  }, [token, dispatch, isInitialCheck, router]);
+  }, [token, dispatch, router]);
 
+  // Fetch user profile
   const {
     data: profile,
     error,
     isLoading,
   } = useGetDeveloperProfileQuery(undefined, {
-    skip: isInitialCheck || !token,
+    skip: !token,
   });
 
-  useEffect(() => {
-    if (!isInitialCheck && !isLoading) {
-      if (error) {
-        if (
-          error &&
-          typeof error === 'object' &&
-          'status' in error &&
-          (error as FetchBaseQueryError).status === 404
-        ) {
-          const userRole = profile?.data?.user?.role;
+  const handleRedirect = useCallback(() => {
+    if (isLoading) return;
 
-          console.log('++++🔥userRole', userRole);
-
-          if (userRole === 'client') {
-            router.push('/create-profile/client');
-          } else {
-            router.push('/create-profile/developer');
-          }
-        } else {
-          console.error('Error fetching profile:', error);
-          router.push('/login');
-        }
-      } else if (profile) {
-        const userRole = profile.data?.user?.role;
-
-        if (userRole === 'client') {
-          router.push('/profiles');
-        } else {
-          router.push('/developer');
-        }
+    if (error) {
+      if ((error as FetchBaseQueryError)?.status === 404) {
+        router.push(
+          userRole === 'client'
+            ? '/create-profile/client'
+            : '/create-profile/developer'
+        );
+      } else {
+        console.error('Error fetching profile:', error);
+        router.push('/login');
       }
+    } else if (profile) {
+      router.push(userRole === 'client' ? '/profiles' : '/developer');
     }
-  }, [error, profile, isLoading, isInitialCheck, router]);
+  }, [error, profile, isLoading, userRole, router]);
+
+  useEffect(() => {
+    handleRedirect();
+  }, [handleRedirect]);
 
   return <FormSkeleton />;
 };
