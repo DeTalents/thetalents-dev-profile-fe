@@ -3,7 +3,6 @@
 import FormSkeleton from '@/components/skeletons/form';
 import { useGetDeveloperProfileQuery } from '@/features/api/apiSlice';
 import { setGoogleAuth } from '@/features/auth/authSlice';
-import { useDecodeToken } from '@/features/hooks/useDecodeToken';
 import { RootState } from '@/store/store';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -15,10 +14,7 @@ const GoogleAuthPage = () => {
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const token = searchParams.get('token');
-  const stateToken = useSelector((state: RootState) => state.auth.token);
-
-  // Decode user role from token
-  const userRole = useDecodeToken(stateToken);
+  const userRole = useSelector((state: RootState) => state.auth.role);
 
   // Dispatch token if available
   useEffect(() => {
