@@ -72,7 +72,7 @@ export function Form() {
       await createProfile(data).unwrap();
       showToast.success('Profile created successfully!');
       methods.reset();
-      router.push('/profile/developer');
+      router.push('/dashboard');
     } catch (error) {
       if (error && typeof error === 'object' && 'data' in error) {
         showToast.error(error.data?.error || 'Failed to create profile');

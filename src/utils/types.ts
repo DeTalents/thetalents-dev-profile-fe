@@ -96,3 +96,13 @@ export type Reference = {
 export type User = {
   email: string;
 };
+
+export type IClientProfile = {
+  id: string;
+  clientName: string;
+  companyName: string;
+  phone: string;
+  userId: string;
+  updatedAt: string;
+  createdAt: string;
+};

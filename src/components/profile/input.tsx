@@ -38,11 +38,14 @@ export function Input<T extends FieldValues>({
   const errorMessage = errors[name as keyof T]?.message;
 
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={name} className="text-indigo-950 text-lg font-bold">
+    <div className="flex flex-col gap-2 w-full">
+      <label
+        htmlFor={name}
+        className="text-indigo-950 text-lg font-bold text-left"
+      >
         {label}
       </label>
-      <div className="relative w-[284px]">
+      <div className="relative w-full">
         {icon && (
           <div className="absolute left-3 top-1/2 -translate-y-1/2">{icon}</div>
         )}

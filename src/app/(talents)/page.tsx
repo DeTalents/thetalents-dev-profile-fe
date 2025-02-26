@@ -50,23 +50,16 @@ function DeveloperInformation() {
     router.push(`?${params.toString()}`, { scroll: false });
   }, [currentPage, pageSize, searchQuery, selectedExperience, router]);
 
-  // Event Handlers
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  // const handleSearch = (query: string) => {
-  //   setSearchQuery(query);
-  //   setCurrentPage(1);
-  // };
 
   const handleExperienceChange = (experience: string[]) => {
     setSelectedExperience(experience);
     setCurrentPage(1);
   };
 
-  // Render Helpers
   const renderContent = () => {
     if (isLoading) {
       return <LoadingState />;
@@ -138,12 +131,10 @@ function DeveloperInformation() {
   // Component Layout
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* <SearchHeader onSearch={handleSearch} initialValue={searchQuery} /> */}
       <TalentsHeader />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex gap-8">
-          {/* Sidebar */}
           <aside
             className={`transition-all duration-300 overflow-hidden ${
               isFilterOpen ? 'w-80 opacity-100' : 'w-0 opacity-0'
@@ -157,7 +148,6 @@ function DeveloperInformation() {
             )}
           </aside>
 
-          {/* Main Content */}
           <main className="flex-1">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
               <DevelopersHeader

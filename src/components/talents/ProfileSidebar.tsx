@@ -66,7 +66,7 @@ export const ProfileSidebar = ({
           icon={<Send className="w-4 h-4" />}
           className="w-full h-12"
         >
-          Send Job Invitation
+          Send Interview Invitation
         </Button>
       </div>
     </div>

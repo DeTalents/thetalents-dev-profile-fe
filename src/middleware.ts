@@ -1,37 +1,46 @@
-// middleware.ts
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+// Routes that require authentication
 const protectedRoutes = [
-  '/profile',
-  '/profile/developer',
-  '/profile/developer/create',
+  '/',
+  '/dashboard',
+  '/create-profile/client',
+  '/create-profile/developer',
 ];
-const authRoutes = ['/', '/login'];
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const { pathname } = request.nextUrl;
 
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.startsWith(route)
+  // Only apply middleware logic to protected routes
+  const isProtectedRoute = protectedRoutes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
-  const isAuthRoute = authRoutes.some((route) => pathname === route);
-
-  // If accessing a protected route without a token, redirect to login
+  // Only redirect if accessing a protected route without a token
   if (isProtectedRoute && !token) {
-    return NextResponse.redirect(new URL('/', request.url));
+    // Create the redirect URL
+    const redirectUrl = new URL('/login', request.url);
+
+    // Add a parameter to prevent redirect loops
+    redirectUrl.searchParams.set('from', pathname);
+
+    return NextResponse.redirect(redirectUrl);
   }
 
-  // If accessing auth routes with a token, redirect to profile
-  if (isAuthRoute && token) {
-    return NextResponse.redirect(new URL('/profile/developer', request.url));
-  }
-
+  // For all other routes, including /login, just proceed normally
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|public).*)'],
+  // Be very specific about which routes the middleware applies to
+  matcher: [
+    '/dashboard',
+    '/dashboard/:path*',
+    '/create-profile/client',
+    '/create-profile/developer',
+    '/',
+    '/:path',
+  ],
 };

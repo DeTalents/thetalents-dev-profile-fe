@@ -1,4 +1,9 @@
-import { ProgramInfoFormData, UpdateBasicDetails } from '@/utils/types';
+import {
+  IClientProfile,
+  ProgramInfoFormData,
+  UpdateBasicDetails,
+} from '@/utils/types';
+import { ClientProfileFormData } from '@/validations/clientProfileValidation';
 import { CreateProfileSchema } from '@/validations/createProfile';
 import { apiSlice } from './apiSlice';
 
@@ -56,6 +61,18 @@ export const profileApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Profile'],
     }),
+
+    createClientProfile: builder.mutation<
+      ApiResponse<IClientProfile>,
+      ClientProfileFormData
+    >({
+      query: (profileData) => ({
+        url: '/client-profile',
+        method: 'POST',
+        body: profileData,
+      }),
+      invalidatesTags: ['Profile'],
+    }),
   }),
 });
 
@@ -64,4 +81,5 @@ export const {
   useUpdateProfileMutation,
   useUpdateProgramInfoMutation,
   useUpdateSkillsMutation,
+  useCreateClientProfileMutation,
 } = profileApi;

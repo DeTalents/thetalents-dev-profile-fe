@@ -67,25 +67,6 @@ export const TalentsHeader = () => {
             </div>
           </div>
         </div>
-
-        {/* Top Skills - Now positioned at the bottom */}
-        <div className="absolute left-8 right-8 bottom-0 translate-y-1/2 hidden lg:block">
-          <div className="flex justify-end gap-4">
-            {['React', 'Node.js', 'Python', 'TypeScript', 'AWS'].map(
-              (skill) => (
-                <div
-                  key={skill}
-                  className="px-6 py-4 bg-white rounded-xl shadow-lg hover:-translate-y-1 transition-transform duration-200"
-                >
-                  <div className="text-sm font-medium text-gray-600 mb-1">
-                    Top Skill
-                  </div>
-                  <div className="text-xl font-bold text-gray-900">{skill}</div>
-                </div>
-              )
-            )}
-          </div>
-        </div>
       </div>
 
       {/* Decorative Elements */}

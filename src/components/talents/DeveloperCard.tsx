@@ -1,6 +1,6 @@
 'use client';
 
-import { DeveloperProfile } from '@/app/profiles/page';
+import { DeveloperProfile } from '@/app/(talents)/page';
 import { Award, Briefcase, ChevronRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 
@@ -9,7 +9,7 @@ const DeveloperCard = ({ profile }: { profile: DeveloperProfile }) => {
   const totalCompanies = profile.experiences.length;
 
   return (
-    <Link href={`/profiles/${profile.id}`} className="block">
+    <Link href={`/${profile.id}`} className="block">
       <div className="w-full rounded-lg border border-gray-200 bg-white p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
         {/* Header Section */}
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
