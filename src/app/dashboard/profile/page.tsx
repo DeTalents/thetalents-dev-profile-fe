@@ -1,13 +1,19 @@
 'use client';
 
 import { ProfileNotFound } from '@/components/profile/ProfileNotFound';
-import UserProfile from '@/components/profile/UserProfile';
+import { TalentProfileSection } from '@/components/profile/TalentProfile';
 import ProfileLoadingSkeleton from '@/components/skeletons/ProfileLoadingSkeleton';
 import { useGetDeveloperProfileQuery } from '@/features/api/apiSlice';
+import { RootState } from '@/store/store';
+import { useSelector } from 'react-redux';
+
+type UserRole = 'client' | 'talent';
 
 export default function ProfilePage() {
   const { data, isLoading, error } = useGetDeveloperProfileQuery(undefined);
-  const userRole = data?.data.user.role;
+  const userRole = useSelector(
+    (state: RootState) => state.auth.role
+  ) as UserRole;
 
   if (isLoading) {
     return <ProfileLoadingSkeleton />;
@@ -60,5 +66,5 @@ export default function ProfilePage() {
     );
   }
 
-  return <UserProfile profileData={data.data} />;
+  return <TalentProfileSection profileData={data.data} />;
 }
