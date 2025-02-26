@@ -36,7 +36,7 @@ const ProfileForm = () => {
       setIsSubmitting(true);
       const response = await createClientProfile(data).unwrap();
       console.log('Profile created successfully:', response);
-      router.push('/client');
+      router.push('/dashboard');
     } catch (error: any) {
       if (error.data?.errors) {
         Object.entries(error.data.errors).forEach(([field, messages]) => {

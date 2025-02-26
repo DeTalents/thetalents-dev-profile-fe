@@ -1,7 +1,10 @@
 'use client';
 
 import FormSkeleton from '@/components/skeletons/form';
-import { useGetDeveloperProfileQuery } from '@/features/api/apiSlice';
+import {
+  useGetClientProfileQuery,
+  useGetDeveloperProfileQuery,
+} from '@/features/api/apiSlice';
 import { setGoogleAuth } from '@/features/auth/authSlice';
 import { RootState } from '@/store/store';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
@@ -16,7 +19,6 @@ const GoogleAuthPage = () => {
   const token = searchParams.get('token');
   const userRole = useSelector((state: RootState) => state.auth.role);
 
-  // Dispatch token if available
   useEffect(() => {
     if (token) {
       dispatch(setGoogleAuth(token));
@@ -25,14 +27,21 @@ const GoogleAuthPage = () => {
     }
   }, [token, dispatch, router]);
 
-  // Fetch user profile
   const {
-    data: profile,
-    error,
-    isLoading,
-  } = useGetDeveloperProfileQuery(undefined, {
-    skip: !token,
-  });
+    data: developerProfile,
+    error: devError,
+    isLoading: devLoading,
+  } = useGetDeveloperProfileQuery(undefined, { skip: userRole !== 'talent' });
+
+  const {
+    data: clientProfile,
+    error: clientError,
+    isLoading: clientLoading,
+  } = useGetClientProfileQuery(undefined, { skip: userRole !== 'client' });
+
+  const isLoading = devLoading || clientLoading;
+  const profile = userRole === 'talent' ? developerProfile : clientProfile;
+  const error = userRole === 'talent' ? devError : clientError;
 
   const handleRedirect = useCallback(() => {
     if (isLoading) return;
@@ -49,7 +58,7 @@ const GoogleAuthPage = () => {
         router.push('/login');
       }
     } else if (profile) {
-      router.push(userRole === 'client' ? '/profiles' : '/developer');
+      router.push(userRole === 'client' ? '/' : '/dashboard');
     }
   }, [error, profile, isLoading, userRole, router]);
 

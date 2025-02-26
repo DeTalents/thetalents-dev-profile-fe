@@ -43,7 +43,7 @@ const navLinks: NavLink[] = [
   },
   {
     name: 'Talents',
-    href: '/profiles',
+    href: '/',
     icon: Users,
     scope: ['client'],
   },

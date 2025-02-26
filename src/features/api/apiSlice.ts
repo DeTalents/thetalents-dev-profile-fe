@@ -6,6 +6,7 @@ import {
   DeveloperProfile,
   DeveloperProfilesResponse,
   DeveloperQueryParams,
+  IClientProfile,
   ProfileResponseData,
 } from '@/utils/types';
 import {
@@ -14,6 +15,12 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 import { logout } from '../auth/authSlice';
+
+interface ApiResponse<T> {
+  data: T;
+  message: string;
+  status: number;
+}
 
 export const api_base_url =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';
@@ -55,6 +62,11 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getDeveloperProfile: builder.query<ProfileResponseData, void>({
       query: () => '/developer-profile',
+      providesTags: ['Profile'],
+    }),
+
+    getClientProfile: builder.query<ApiResponse<IClientProfile>, void>({
+      query: () => '/client-profile',
       providesTags: ['Profile'],
     }),
 
@@ -121,4 +133,5 @@ export const {
   useGetDeveloperProfileQuery,
   useGetPublicProfilesQuery,
   useGetPublicProfileByIdQuery,
+  useGetClientProfileQuery,
 } = apiSlice;

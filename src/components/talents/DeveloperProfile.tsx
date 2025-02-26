@@ -1,5 +1,5 @@
 'use strict';
-import type { DeveloperProfile as DeveloperProfileType } from '@/app/profiles/page';
+import type { DeveloperProfile as DeveloperProfileType } from '@/app/(talents)/page';
 import { formatDate } from '@/utils/formatDate';
 import formatProgramName from '@/utils/formatProgramName';
 import { Breadcrumb, Button, Tooltip } from 'antd';

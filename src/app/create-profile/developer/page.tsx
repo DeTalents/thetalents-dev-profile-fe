@@ -7,7 +7,7 @@ import { NextPage } from 'next';
 const CreateProfile: NextPage = () => {
   const { isLoading, hasProfile } = useProfileAccess({
     redirectIfProfileExists: true,
-    redirectTo: '/developer', // When user has a profile, redirect here
+    redirectTo: '/dashboard', // When user has a profile, redirect here
   });
 
   if (isLoading) return <div>Loading...</div>;
