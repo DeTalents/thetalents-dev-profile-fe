@@ -106,3 +106,9 @@ export type IClientProfile = {
   updatedAt: string;
   createdAt: string;
 };
+
+export interface ApiResponse<T> {
+  data: T;
+  message: string;
+  status: number;
+}

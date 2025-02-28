@@ -1,6 +1,6 @@
 'use client';
 
-import { TalentHomeSection } from '@/components/dashaboard/talent-home-section';
+import { TalentHomeSection } from '@/components/dashboard/talent-home-section';
 import ProfileLoadingSkeleton from '@/components/skeletons/ProfileLoadingSkeleton';
 import { useGetDeveloperProfileQuery } from '@/features/api/apiSlice';
 import { RootState } from '@/store/store';
