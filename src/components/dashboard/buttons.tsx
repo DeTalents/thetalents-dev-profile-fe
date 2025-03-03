@@ -1,4 +1,5 @@
-import { Tooltip } from 'antd';
+import { useDeleteCartMutation } from '@/features/api/cartApi';
+import { message, Popconfirm, Tooltip } from 'antd';
 import clsx from 'clsx';
 import { EyeIcon, PlusIcon, ShoppingCartIcon, Trash2Icon } from 'lucide-react';
 import Link from 'next/link';
@@ -42,15 +43,40 @@ export function CheckoutCart({ id, disabled }: CheckoutCartProps) {
   );
 }
 export function DeleteCart({ id }: { id: string }) {
+  const [deleteCart, { isLoading: isDeleting }] = useDeleteCartMutation();
+
+  const handleDeleteCart = async (id: string) => {
+    try {
+      await deleteCart(id).unwrap();
+      message.success('cart deleted successfully');
+    } catch (error) {
+      console.error('Failed to delete cart:', error);
+      message.success('something went wrong');
+    }
+  };
+
   return (
     <>
-      {/* Add action for delete */}
-      <form>
-        <button className="rounded-md border p-2 hover:bg-gray-100">
+      <Popconfirm
+        title="Delete cart"
+        description="Are you sure you want to delete this cart?"
+        onConfirm={() => handleDeleteCart(id)}
+        okText="Yes"
+        cancelText="No"
+        placement="left"
+        okButtonProps={{
+          danger: true,
+          loading: isDeleting,
+        }}
+      >
+        <button
+          className="rounded-md border p-2 hover:bg-gray-100"
+          disabled={isDeleting}
+        >
           <span className="sr-only">Delete</span>
           <Trash2Icon className="w-5" />
         </button>
-      </form>
+      </Popconfirm>
     </>
   );
 }

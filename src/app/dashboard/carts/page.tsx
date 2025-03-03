@@ -1,27 +1,25 @@
-import { CreateCart } from '@/components/dashboard/buttons';
+'use client';
+
 import CartsTable from '@/components/dashboard/cart/CartsTable';
+import { CreateCartButton } from '@/components/dashboard/cart/CreateCartButton';
+import EmptyState from '@/components/global/EmptyState';
 import { InvoicesTableSkeleton } from '@/components/skeletons/skeletons';
+import { useGetAllCartsQuery } from '@/features/api/cartApi';
+import { RootState } from '@/store/store';
 import { lusitana } from '@/utils/font';
-import { Suspense } from 'react';
+import { ShoppingCart } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
-const carts = [
-  {
-    id: '29be3387-a0b8-47eb-88e6-58d07a58a317',
-    name: 'Devops developer',
-    createdAt: '2025-02-27T22:50:56.189Z',
-    status: 'active',
-    items: [{ id: '1' }, { id: '2' }],
-  },
-  {
-    id: '025da3a1-3a04-46eb-bb88-4d90c8e9e926',
-    name: 'Junior developer',
-    createdAt: '2025-02-27T21:53:10.493Z',
-    status: 'checkout_complete',
-    items: [{ id: '3' }, { id: '4' }, { id: '5' }],
-  },
-];
+export default function Page() {
+  const userRole = useSelector((state: RootState) => state.auth.role);
 
-export default async function Page() {
+  const { data: cartsResponse, isLoading } = useGetAllCartsQuery(undefined, {
+    skip: userRole !== 'client',
+  });
+
+  const carts = cartsResponse?.data || [];
+  const isEmptyCart = !isLoading && carts.length === 0;
+
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -29,11 +27,21 @@ export default async function Page() {
       </div>
       <div className="mt-4 flex items-end justify-between gap-2 md:mt-8">
         <div className="flex-grow" />
-        <CreateCart />
+        <CreateCartButton />
       </div>
-      <Suspense fallback={<InvoicesTableSkeleton />}>
+
+      {isLoading ? (
+        <InvoicesTableSkeleton />
+      ) : isEmptyCart ? (
+        <EmptyState
+          icon={ShoppingCart}
+          title="No carts yet"
+          description="You haven't created any carts yet. Start by creating a new cart to add talented developers to your selection."
+          className={lusitana.className}
+        />
+      ) : (
         <CartsTable carts={carts} />
-      </Suspense>
+      )}
     </div>
   );
 }

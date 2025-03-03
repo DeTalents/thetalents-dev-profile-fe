@@ -59,7 +59,10 @@ export default function CartsTable({ carts }: TableProps) {
                   <div className="flex justify-end gap-2">
                     <ViewCart id={cart.id} />
                     <DeleteCart id={cart.id} />
-                    <CheckoutCart id={cart.id} />
+                    <CheckoutCart
+                      id={cart.id}
+                      disabled={cart.status === 'checkout_complete'}
+                    />
                   </div>
                 </div>
               </div>

@@ -39,7 +39,6 @@ export const Experience = ({ experiences, onUpdate }: ExperienceProps) => {
   const handleDeleteExperience = async (id: string) => {
     try {
       await deleteExperience(id).unwrap();
-      //keep the local state update
       const updatedExperiences = experiences.filter((exp) => exp.id !== id);
       onUpdate?.(updatedExperiences);
     } catch (error) {
