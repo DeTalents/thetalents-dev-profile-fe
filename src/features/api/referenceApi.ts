@@ -22,6 +22,7 @@ interface ApiResponse<T> {
 }
 
 export const referenceApi = apiSlice.injectEndpoints({
+  overrideExisting: true,
   endpoints: (builder) => ({
     addReference: builder.mutation<ApiResponse<Reference>, ReferenceFormData>({
       query: (data) => ({

@@ -1,9 +1,21 @@
-import { Briefcase, Users } from 'lucide-react';
+import { Briefcase, LayoutDashboard, Users } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const TalentsHeader = () => {
   return (
     <div className="relative h-[320px] mb-8">
+      {/* Dashboard Navigation Button */}
+      <div className="absolute top-4 left-4 z-20">
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors"
+        >
+          <LayoutDashboard className="w-5 h-5" />
+          <span>Dashboard</span>
+        </Link>
+      </div>
+
       {/* Background Image with Gradient Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -44,16 +56,6 @@ export const TalentsHeader = () => {
                   <div className="text-sm text-white/80">Active Developers</div>
                 </div>
               </div>
-
-              {/* <div className="flex items-center gap-3 text-white">
-                <div className="p-2 bg-white/10 rounded-lg">
-                  <Star className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold">4.8/5</div>
-                  <div className="text-sm text-white/80">Average Rating</div>
-                </div>
-              </div> */}
 
               <div className="flex items-center gap-3 text-white">
                 <div className="p-2 bg-white/10 rounded-lg">

@@ -1,0 +1,192 @@
+'use client';
+
+import { ChevronRight, Clock, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+
+export default function TalentCartPage() {
+  // This would come from your API
+  const [cartData, setCartData] = useState({
+    "message": "Talent cart found",
+    "data": [
+      {
+        "id": "025da3a1-3a04-46eb-bb88-4d90c8e9e926",
+        "clientId": "eed13984-b783-4275-bd5e-99c0643a6234",
+        "status": "active",
+        "name": "Junior developer",
+        "createdAt": "2025-02-27T21:53:10.493Z",
+        "updatedAt": "2025-02-27T21:53:10.493Z",
+        "items": [
+          {
+            "id": "f870b558-6429-4f92-846d-d3a734f29eec",
+            "cartId": "025da3a1-3a04-46eb-bb88-4d90c8e9e926",
+            "talentId": "6dec552d-f859-447e-aaf0-ba345527e9bf",
+            "talentSnapshot": null,
+            "createdAt": "2025-02-27T21:53:10.683Z",
+            "updatedAt": "2025-02-27T21:53:10.683Z",
+            "talent": {
+              "id": "6dec552d-f859-447e-aaf0-ba345527e9bf",
+              "firstName": "John ",
+              "secondName": "carter",
+              "skills": ["javascript", "node.js", "typescript"],
+              "mainTitle": "Senior dev",
+              "yearsOfExperience": 3
+            }
+          },
+          {
+            "id": "7cd5aef4-5859-4415-a2b5-f352cb493969",
+            "cartId": "025da3a1-3a04-46eb-bb88-4d90c8e9e926",
+            "talentId": "660e8400-e29b-41d4-a716-446655440000",
+            "talentSnapshot": null,
+            "createdAt": "2025-02-27T22:12:03.308Z",
+            "updatedAt": "2025-02-27T22:12:03.308Z",
+            "talent": {
+              "id": "660e8400-e29b-41d4-a716-446655440000",
+              "firstName": "John",
+              "secondName": "Doe",
+              "skills": ["JavaScript", "React", "Node.js"],
+              "mainTitle": "Full Stack Developer",
+              "yearsOfExperience": 5
+            }
+          },
+          {
+            "id": "6013d77c-7301-481d-bad1-734c49c24322",
+            "cartId": "025da3a1-3a04-46eb-bb88-4d90c8e9e926",
+            "talentId": "660e8400-e29b-41d4-a716-446655440002",
+            "talentSnapshot": null,
+            "createdAt": "2025-02-27T22:13:12.270Z",
+            "updatedAt": "2025-02-27T22:13:12.270Z",
+            "talent": {
+              "id": "660e8400-e29b-41d4-a716-446655440002",
+              "firstName": "Alice",
+              "secondName": "Johnson",
+              "skills": ["Node.js", "Python", "Django"],
+              "mainTitle": "Backend Developer",
+              "yearsOfExperience": 4
+            }
+          }
+        ]
+      }
+    ]
+  });
+  
+  const cart = cartData.data[0]; // Assuming we're working with the first cart
+  
+  const handleRemoveTalent = (itemId) => {
+    // Implementation would remove talent from cart via API
+    const updatedItems = cart.items.filter(item => item.id !== itemId);
+    setCartData({
+      ...cartData,
+      data: [
+        {
+          ...cart,
+          items: updatedItems
+        }
+      ]
+    });
+  };
+  
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    }).format(date);
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">Talent Cart</h1>
+        <div className="flex items-center">
+          <span className="text-gray-600 mr-2">Created</span>
+          <span className="font-medium">{formatDate(cart.createdAt)}</span>
+        </div>
+      </div>
+      
+      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-800">{cart.name}</h2>
+            <p className="text-sm text-gray-500">{cart.items.length} talents added</p>
+          </div>
+          <div className="flex items-center">
+            <span className={`px-3 py-1 text-sm rounded-full ${
+              cart.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+            }`}>
+              {cart.status === 'active' ? 'Active' : cart.status}
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      {cart.items.length === 0 ? (
+        <div className="text-center py-12 bg-white rounded-lg shadow-md">
+          <p className="text-gray-500">No talents added to this cart yet.</p>
+        </div>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {cart.items.map((item) => (
+            <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+              <div className="p-5">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="font-semibold text-gray-800 text-lg">
+                      {item.talent.firstName} {item.talent.secondName}
+                    </h3>
+                    <p className="text-indigo-600 font-medium">
+                      {item.talent.mainTitle}
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => handleRemoveTalent(item.id)}
+                    className="text-gray-400 hover:text-red-500 transition-colors"
+                    aria-label="Remove talent"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+
+                <div className="flex items-center space-x-2 mb-4">
+                  <Clock size={16} className="text-gray-400" />
+                  <span className="text-sm text-gray-600">
+                    {item.talent.yearsOfExperience} {item.talent.yearsOfExperience === 1 ? 'year' : 'years'} of experience
+                  </span>
+                </div>
+                
+                <div className="mb-4">
+                  <p className="text-sm text-gray-500 mb-2">Skills</p>
+                  <div className="flex flex-wrap gap-2">
+                    {item.talent.skills.map((skill, index) => (
+                      <span 
+                        key={index} 
+                        className="bg-indigo-50 text-indigo-600 px-2 py-1 rounded-md text-xs font-medium"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="border-t border-gray-100 p-4">
+                <button className="w-full flex items-center justify-center text-indigo-600 hover:text-indigo-800 transition-colors">
+                  <span className="font-medium">View Profile</span>
+                  <ChevronRight size={16} className="ml-1" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      
+      {cart.items.length > 0 && (
+        <div className="mt-8 flex justify-end">
+          <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md font-medium transition-colors">
+            Proceed with Selection
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}

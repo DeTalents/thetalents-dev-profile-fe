@@ -127,8 +127,6 @@ function DeveloperInformation() {
       </>
     );
   };
-
-  // Component Layout
   return (
     <div className="min-h-screen bg-gray-50">
       <TalentsHeader />

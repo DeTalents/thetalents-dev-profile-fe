@@ -10,10 +10,12 @@ import { useSelector } from 'react-redux';
 type UserRole = 'client' | 'talent';
 
 export default function ProfilePage() {
-  const { data, isLoading, error } = useGetDeveloperProfileQuery(undefined);
   const userRole = useSelector(
     (state: RootState) => state.auth.role
   ) as UserRole;
+  const { data, isLoading, error } = useGetDeveloperProfileQuery(undefined, {
+    skip: userRole !== 'talent',
+  });
 
   if (isLoading) {
     return <ProfileLoadingSkeleton />;

@@ -1,4 +1,4 @@
-import SideNav from '@/components/dashaboard/sidenav';
+import SideNav from '@/components/dashboard/sidenav';
 import React from 'react';
 
 interface Props {
