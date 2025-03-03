@@ -12,8 +12,8 @@ interface CreateCartRequest {
   status?: 'active' | 'archived';
 }
 
-// Inject endpoints to the existing apiSlice
 export const cartApi = apiSlice.injectEndpoints({
+  overrideExisting: true,
   endpoints: (builder) => ({
     // Get all carts for the current client
     getAllCarts: builder.query<ApiResponse<ICart[]>, void>({
@@ -54,13 +54,23 @@ export const cartApi = apiSlice.injectEndpoints({
       ],
     }),
 
-    getTalentCartItems: builder.mutation<
+    getTalentCartItems: builder.query<
       ApiResponse<ICartItem[]>,
       { cartId: string }
     >({
       query: ({ cartId }) => ({
         url: `/talent-carts/${cartId}/items`,
         method: 'GET',
+      }),
+      providesTags: ['Cart'],
+    }),
+    deleteCartItem: builder.mutation<
+      ApiResponse<void>,
+      { cartId: string; itemId: string }
+    >({
+      query: ({ cartId, itemId }) => ({
+        url: `/talent-carts/${cartId}/items/${itemId}`,
+        method: 'DELETE',
       }),
       invalidatesTags: ['Cart'],
     }),
@@ -72,5 +82,6 @@ export const {
   useCreateCartMutation,
   useDeleteCartMutation,
   useAddTalentToCartItemMutation,
-  useGetTalentCartItemsMutation,
+  useGetTalentCartItemsQuery,
+  useDeleteCartItemMutation,
 } = cartApi;

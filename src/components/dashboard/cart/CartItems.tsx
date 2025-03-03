@@ -1,6 +1,7 @@
 'use client';
 
 import { ICartItem } from '@/utils/types/cart';
+import { Popconfirm } from 'antd';
 import { Award, Briefcase, ChevronRight, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 
@@ -8,12 +9,14 @@ type CartItemProps = {
   item: ICartItem;
   onRemoveTalent: (id: string) => void;
   onViewProfile: (talentId: string) => void;
+  isLoading: boolean;
 };
 
 const CartItem: React.FC<CartItemProps> = ({
   item,
   onRemoveTalent,
   onViewProfile,
+  isLoading,
 }) => {
   const { talent } = item;
   const [isHovering, setIsHovering] = useState(false);
@@ -85,14 +88,26 @@ const CartItem: React.FC<CartItemProps> = ({
         </div>
 
         <div className="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
-          <button
-            onClick={() => onRemoveTalent(item.id)}
-            className="flex items-center gap-1 bg-white hover:bg-red-50 text-red-600 hover:text-red-700 font-medium px-4 py-2 rounded-lg transition-all duration-200 border border-red-200 shadow-sm"
-            aria-label="Remove talent"
+          <Popconfirm
+            title="Remove Talent from cart"
+            description="Are you sure you want to remove this talent?"
+            onConfirm={() => onRemoveTalent(item.id)}
+            okText="Yes"
+            cancelText="No"
+            placement="top"
+            okButtonProps={{
+              danger: true,
+              loading: isLoading,
+            }}
           >
-            <Trash2 size={16} />
-            <span>Remove</span>
-          </button>
+            <button
+              className="flex items-center gap-1 bg-white hover:bg-red-50 text-red-600 hover:text-red-700 font-medium px-4 py-2 rounded-lg transition-all duration-200 border border-red-200 shadow-sm"
+              aria-label="Remove talent"
+            >
+              <Trash2 size={16} />
+              <span>Remove</span>
+            </button>
+          </Popconfirm>
 
           <button
             onClick={() => onViewProfile(talent.id)}

@@ -2,28 +2,32 @@
 
 import Breadcrumbs from '@/components/dashboard/breadcrumbs';
 import CartItem from '@/components/dashboard/cart/CartItems';
-import { useGetTalentCartItemsMutation } from '@/features/api/cartApi';
+import {
+  useDeleteCartItemMutation,
+  useGetTalentCartItemsQuery,
+} from '@/features/api/cartApi';
+import { message } from 'antd';
 import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function Page() {
   const params = useParams();
-  const cartId = params.id;
+  const cartId = params.id as string;
 
-  const [getTalentCartItems, { data: cartData, isLoading }] =
-    useGetTalentCartItemsMutation();
+  const { data: cartData, isLoading } = useGetTalentCartItemsQuery(
+    { cartId },
+    { skip: !cartId }
+  );
+  const [deleteCartItem, { isLoading: isDeleting }] =
+    useDeleteCartItemMutation();
 
-  useEffect(() => {
-    if (cartId && typeof cartId === 'string') {
-      getTalentCartItems({ cartId });
+  const handleRemoveTalent = async (itemId: string) => {
+    try {
+      await deleteCartItem({ cartId, itemId }).unwrap();
+      message.success('Talent removed successfully');
+    } catch (error) {
+      console.error('Failed to delete cart:', error);
+      message.success('something went wrong');
     }
-  }, [cartId, getTalentCartItems]);
-
-  const handleRemoveTalent = (itemId: string) => {
-    console.log(
-      'Remove talent functionality will be implemented later:',
-      itemId
-    );
   };
 
   const cartItems = cartData?.data;
@@ -54,6 +58,7 @@ export default function Page() {
               onViewProfile={(talentId) => {
                 window.open(`/${talentId}`, '_blank', 'noopener,noreferrer');
               }}
+              isLoading={isDeleting}
             />
           ))}
         </div>
