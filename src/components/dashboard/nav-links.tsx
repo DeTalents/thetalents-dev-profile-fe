@@ -30,8 +30,8 @@ const navLinks: NavLink[] = [
     scope: ['client'],
   },
   {
-    name: 'Orders',
-    href: '/dashboard/orders',
+    name: 'Checkouts',
+    href: '/dashboard/checkouts',
     icon: ClipboardList,
     scope: ['client'],
   },

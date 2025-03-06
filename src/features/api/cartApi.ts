@@ -74,6 +74,14 @@ export const cartApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Cart'],
     }),
+    checkoutCart: builder.mutation<any, { cartId: string; notes: string }>({
+      query: ({ cartId, notes }) => ({
+        url: '/checkouts',
+        method: 'POST',
+        body: { cartId, notes },
+      }),
+      invalidatesTags: ['Cart'],
+    }),
   }),
 });
 
@@ -84,4 +92,5 @@ export const {
   useAddTalentToCartItemMutation,
   useGetTalentCartItemsQuery,
   useDeleteCartItemMutation,
+  useCheckoutCartMutation,
 } = cartApi;

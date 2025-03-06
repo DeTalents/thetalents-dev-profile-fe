@@ -39,7 +39,6 @@ export function CreateCartButton() {
   const onSubmit = async (data: CartFormValues) => {
     try {
       const res = await createCart(data).unwrap();
-      console.log('+++++', res);
       setIsModalOpen(false);
       message.success('Cart Created successfuly!');
       reset();
