@@ -1,8 +1,17 @@
 'use client';
 
+import { ITalent } from '@/utils/types/cart';
 import { ChevronRight, Clock, Trash2 } from 'lucide-react';
 
-const CartItem = ({ item, onRemove }) => {
+interface IItem {
+  item: {
+    id: string;
+    talent: ITalent;
+  };
+  onRemove: (id: string) => void;
+}
+
+const CartItem = ({ item, onRemove }: IItem) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="p-5">

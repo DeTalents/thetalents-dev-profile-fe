@@ -1,10 +1,9 @@
-import type { DeveloperProfile as DeveloperProfileType } from '@/app/(talents)/page';
+import { DeveloperProfile } from '@/utils/types';
 import { Tooltip } from 'antd';
 import { motion } from 'framer-motion';
 import { Award, Clock, Mail, Phone, Send, ShoppingCart } from 'lucide-react';
-
 interface ProfileSidebarProps {
-  profile: DeveloperProfileType;
+  profile: DeveloperProfile;
   onAddToCart: () => void;
   isLoading: boolean;
 }
@@ -16,12 +15,9 @@ const ProfileSidebar = ({
 }: ProfileSidebarProps) => {
   return (
     <div className="md:col-span-1 space-y-6">
-      {/* Card Component */}
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
         <div className="p-6 space-y-6">
-          {/* Profile Header */}
           <div className="text-center">
-            {/* Avatar with Verified Badge */}
             <div className="relative inline-block">
               <div className="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
                 <span className="text-indigo-600 text-3xl font-medium">
@@ -49,7 +45,6 @@ const ProfileSidebar = ({
               </Tooltip>
             </div>
 
-            {/* Name and Role */}
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-gray-900">
                 {profile.firstName} {profile.secondName}
@@ -59,7 +54,6 @@ const ProfileSidebar = ({
               </span>
             </div>
 
-            {/* Experience Badge */}
             <div className="mt-4 p-3 bg-indigo-50 rounded-lg">
               <div className="flex items-center justify-center gap-2">
                 <Clock className="w-4 h-4 text-indigo-600" />
@@ -70,7 +64,6 @@ const ProfileSidebar = ({
             </div>
           </div>
 
-          {/* Contact Info */}
           <div className="space-y-3">
             <div className="flex items-center text-gray-600">
               <Mail className="w-4 h-4 mr-2" />
@@ -82,7 +75,6 @@ const ProfileSidebar = ({
             </div>
           </div>
 
-          {/* Skills */}
           <div className="space-y-3">
             <h3 className="font-semibold text-gray-900">Skills</h3>
             <div className="flex flex-wrap gap-2">
@@ -97,7 +89,6 @@ const ProfileSidebar = ({
             </div>
           </div>
 
-          {/* Action Buttons */}
           <button
             className="w-full text-white bg-indigo-600 hover:bg-indigo-700 py-2 px-4 rounded-md flex items-center justify-center"
             onClick={onAddToCart}

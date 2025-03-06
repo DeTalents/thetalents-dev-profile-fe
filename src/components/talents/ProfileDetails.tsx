@@ -1,17 +1,16 @@
-import type { DeveloperProfile as DeveloperProfileType } from '@/app/(talents)/page';
 import { formatDate } from '@/utils/formatDate';
 import formatProgramName from '@/utils/formatProgramName';
+import { DeveloperProfile } from '@/utils/types';
 import { motion } from 'framer-motion';
 import { Calendar, Mail, Phone } from 'lucide-react';
 
 interface ProfileDetailsProps {
-  profile: DeveloperProfileType;
+  profile: DeveloperProfile;
 }
 
 const ProfileDetails = ({ profile }: ProfileDetailsProps) => {
   return (
     <div className="md:col-span-2 space-y-8">
-      {/* Summary Section */}
       <motion.div
         whileHover={{ y: -2 }}
         className="bg-white rounded-lg border border-gray-200 shadow-sm p-6"
@@ -20,7 +19,6 @@ const ProfileDetails = ({ profile }: ProfileDetailsProps) => {
         <p className="text-gray-600 leading-relaxed">{profile.summary}</p>
       </motion.div>
 
-      {/* Experience Section */}
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
         <h3 className="text-xl font-semibold mb-6">Experience</h3>
         <div className="space-y-6">

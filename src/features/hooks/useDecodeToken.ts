@@ -3,6 +3,14 @@
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 
+export interface IDecodedToken {
+  userId: string;
+  userEmail: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
+
 export const useDecodeToken = (token: string | null): string | null => {
   const [userRole, setUserRole] = useState<string | null>(null);
 
@@ -10,9 +18,9 @@ export const useDecodeToken = (token: string | null): string | null => {
     if (!token) return;
 
     try {
-      const decoded: any = jwtDecode(token);
+      const decoded: IDecodedToken = jwtDecode(token);
 
-      const role = decoded.role || decoded.user?.role || null;
+      const role = decoded.role || null;
       setUserRole(role);
     } catch (error) {
       console.error('Error decoding token:', error);

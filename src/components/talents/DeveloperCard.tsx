@@ -1,6 +1,6 @@
 'use client';
 
-import { DeveloperProfile } from '@/app/(talents)/page';
+import { DeveloperProfile } from '@/utils/types';
 import { Award, Briefcase, ChevronRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 
