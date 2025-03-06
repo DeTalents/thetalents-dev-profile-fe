@@ -1,7 +1,10 @@
 'use client';
 
 import { ProfileNotFound } from '@/components/profile/ProfileNotFound';
-import { TalentProfileSection } from '@/components/profile/TalentProfile';
+import {
+  ProfileData,
+  TalentProfileSection,
+} from '@/components/profile/TalentProfile';
 import ProfileLoadingSkeleton from '@/components/skeletons/ProfileLoadingSkeleton';
 import { useGetDeveloperProfileQuery } from '@/features/api/apiSlice';
 import { RootState } from '@/store/store';
@@ -46,7 +49,7 @@ export default function ProfilePage() {
       <ProfileNotFound
         type="error"
         message={
-          'status' in error
+          error && typeof error === 'object' && 'status' in error
             ? `Error ${error.status}: Failed to load profile`
             : 'Failed to load profile'
         }
@@ -68,5 +71,7 @@ export default function ProfilePage() {
     );
   }
 
-  return <TalentProfileSection profileData={data.data} />;
+  return (
+    <TalentProfileSection profileData={data?.data as unknown as ProfileData} />
+  );
 }

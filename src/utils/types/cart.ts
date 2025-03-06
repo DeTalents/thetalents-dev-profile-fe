@@ -21,6 +21,7 @@ export type ICartItem = {
   createdAt: string;
   updatedAt: string;
   talent: ITalent;
+  cart: ICart;
 };
 
 export type ICart = {

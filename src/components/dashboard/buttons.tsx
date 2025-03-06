@@ -3,10 +3,12 @@ import { message, Popconfirm, Tooltip } from 'antd';
 import clsx from 'clsx';
 import { EyeIcon, PlusIcon, ShoppingCartIcon, Trash2Icon } from 'lucide-react';
 import Link from 'next/link';
-
+import { useState } from 'react';
+import CheckoutModal from './checkout/CheckoutModal';
 interface CheckoutCartProps {
   id: string;
-  disabled?: boolean;
+  disabled: boolean;
+  onCheckoutSuccess?: () => void;
 }
 
 export function ViewCart({ id }: { id: string }) {
@@ -19,29 +21,7 @@ export function ViewCart({ id }: { id: string }) {
     </Link>
   );
 }
-export function CheckoutCart({ id, disabled }: CheckoutCartProps) {
-  const linkClasses = clsx('p-2 rounded-lg border transition-colors', {
-    'border-gray-200 text-gray-300 cursor-not-allowed': disabled,
-    'border-gray-200 hover:border-gray-300 text-gray-500 hover:text-green-600':
-      !disabled,
-  });
 
-  const linkContent = (
-    <div className={linkClasses}>
-      <ShoppingCartIcon className="w-5" />
-    </div>
-  );
-
-  return disabled ? (
-    <Tooltip title="This cart has already been checked out">
-      <div className="inline-block">{linkContent}</div>
-    </Tooltip>
-  ) : (
-    <Link href={`/checkout/${id}`} passHref>
-      {linkContent}
-    </Link>
-  );
-}
 export function DeleteCart({ id }: { id: string }) {
   const [deleteCart, { isLoading: isDeleting }] = useDeleteCartMutation();
 
@@ -90,5 +70,50 @@ export function CreateCart() {
       <span className="hidden md:block">Add new cart</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
     </Link>
+  );
+}
+
+export function CheckoutCart({
+  id,
+  disabled,
+  onCheckoutSuccess,
+}: CheckoutCartProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const linkClasses = clsx('p-2 rounded-lg border transition-colors', {
+    'border-gray-200 text-gray-300 cursor-not-allowed': disabled,
+    'border-gray-200 hover:border-gray-300 text-gray-500 hover:text-green-600 cursor-pointer':
+      !disabled,
+  });
+
+  const handleOpenModal = () => {
+    if (!disabled) {
+      setIsModalOpen(true);
+    }
+  };
+
+  const linkContent = (
+    <div className={linkClasses} onClick={handleOpenModal}>
+      <ShoppingCartIcon className="w-5" />
+    </div>
+  );
+
+  return (
+    <>
+      {disabled ? (
+        <Tooltip title="This cart has already been checked out">
+          <div className="inline-block">{linkContent}</div>
+        </Tooltip>
+      ) : (
+        <div className="inline-block">{linkContent}</div>
+      )}
+
+      <CheckoutModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        cartId={id}
+        onSuccess={onCheckoutSuccess}
+      />
+    </>
   );
 }

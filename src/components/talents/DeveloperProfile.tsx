@@ -1,10 +1,11 @@
 'use strict';
-import type { DeveloperProfile as DeveloperProfileType } from '@/app/(talents)/page';
+
 import {
   useAddTalentToCartItemMutation,
   useCreateCartMutation,
   useGetAllCartsQuery,
 } from '@/features/api/cartApi';
+import { DeveloperProfile as DeveloperProfileType } from '@/utils/types';
 import { Breadcrumb, Button, message } from 'antd';
 import { motion } from 'framer-motion';
 import { ChevronLeft } from 'lucide-react';

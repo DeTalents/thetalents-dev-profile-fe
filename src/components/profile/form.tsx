@@ -68,14 +68,13 @@ export function Form() {
 
   async function onSubmit(data: CreateProfileSchema) {
     try {
-      console.log('++++', data);
       await createProfile(data).unwrap();
       showToast.success('Profile created successfully!');
       methods.reset();
       router.push('/dashboard');
     } catch (error) {
       if (error && typeof error === 'object' && 'data' in error) {
-        showToast.error(error.data?.error || 'Failed to create profile');
+        showToast.error('Failed to create profile');
       } else {
         showToast.error('An unexpected error occurred');
       }
