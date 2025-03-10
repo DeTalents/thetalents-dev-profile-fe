@@ -1,8 +1,7 @@
 import { getProgramInfo } from '@/utils/helpers/programUtils';
 import { AndelaProgram, NonAndelaProgram } from '@/utils/types';
-import { Progress } from 'antd';
 import { motion } from 'framer-motion';
-import { BookOpen } from 'lucide-react';
+import { ProfileCompletionCard } from '../dashboard/ProfileCompletionCard';
 import { BasicInfo } from './edit/BasicInfo';
 import { Experience } from './edit/Experience';
 import { ProfileImage } from './edit/ProfileImage';
@@ -49,6 +48,7 @@ export interface ProfileData {
     email: string;
   };
 }
+
 export const TalentProfileSection = ({
   profileData,
 }: {
@@ -112,18 +112,7 @@ export const TalentProfileSection = ({
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <Skills skills={profileData.skills} />
           </div>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h3 className="text-lg font-semibold mb-4 flex items-center">
-              <BookOpen className="w-5 h-5 text-indigo-600 mr-2" /> Profile
-              Completion
-            </h3>
-            <div className="space-y-3">
-              <Progress percent={85} strokeColor="#4F46E5" />
-              <p className="text-sm text-gray-600">
-                Complete your profile to increase visibility
-              </p>
-            </div>
-          </div>
+          <ProfileCompletionCard profileId={profileData.id} />
         </div>
       </div>
     </motion.div>

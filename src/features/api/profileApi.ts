@@ -27,6 +27,26 @@ export const profileApi = apiSlice.injectEndpoints({
       invalidatesTags: ['Profile'],
     }),
 
+    getDeveloperProfileRecommendations: builder.query<
+      {
+        currentPercentage: number;
+        recommendations: {
+          action: string;
+          details: string;
+          percentageGain: number;
+          priority: 'High' | 'Medium' | 'Low';
+        }[];
+        potentialPercentage: number;
+      },
+      string
+    >({
+      query: (profileId) => ({
+        url: `/developer-profile/${profileId}/recommendations`,
+        method: 'GET',
+      }),
+      providesTags: ['Profile'],
+    }),
+
     updateProfile: builder.mutation<
       ApiResponse<CreateProfileSchema>,
       UpdateBasicDetails
@@ -82,4 +102,5 @@ export const {
   useUpdateProgramInfoMutation,
   useUpdateSkillsMutation,
   useCreateClientProfileMutation,
+  useGetDeveloperProfileRecommendationsQuery,
 } = profileApi;
