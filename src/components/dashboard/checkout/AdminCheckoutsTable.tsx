@@ -1,7 +1,8 @@
 import { ICheckout } from '@/utils/types/checkout';
+import { UpdateCheckoutStatus, ViewCheckout } from '../buttons';
 import CheckoutStatus from './CheckoutStatus';
 
-interface TableProps {
+interface AdminTableProps {
   checkouts: ICheckout[];
 }
 
@@ -23,7 +24,7 @@ export const getShortenedId = (id: string) => {
   return id.substring(0, 8);
 };
 
-export default function CheckoutsTable({ checkouts }: TableProps) {
+export default function AdminCheckoutsTable({ checkouts }: AdminTableProps) {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -53,10 +54,13 @@ export default function CheckoutsTable({ checkouts }: TableProps) {
                     <p className="text-sm text-gray-500">
                       Created: {formatDateToLocal(checkout.createdAt)}
                     </p>
+                    <p className="text-sm text-gray-500">
+                      Talents: {checkout.items?.length || 0}
+                    </p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    {/* <ViewCheckout id={checkout.id} />
-                    <DeleteCheckout id={checkout.id} />
+                    <ViewCheckout id={checkout.id} />
+                    {/* <DeleteCheckout id={checkout.id} />
                     <UpdateCheckoutStatus
                       id={checkout.id}
                       currentStatus={checkout.status}
@@ -77,12 +81,12 @@ export default function CheckoutsTable({ checkouts }: TableProps) {
                 >
                   Checkout ID
                 </th>
-                <th
+                {/* <th
                   scope="col"
                   className="px-6 py-3 bg-gray-100 font-semibold text-gray-700 uppercase tracking-wider"
                 >
                   Notes
-                </th>
+                </th> */}
                 <th
                   scope="col"
                   className="px-6 py-3 bg-gray-100 font-semibold text-gray-700 uppercase tracking-wider"
@@ -95,12 +99,24 @@ export default function CheckoutsTable({ checkouts }: TableProps) {
                 >
                   Status
                 </th>
-                {/* <th
+                <th
+                  scope="col"
+                  className="px-6 py-3 bg-gray-100 font-semibold text-gray-700 uppercase tracking-wider"
+                >
+                  Talents
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 bg-gray-100 font-semibold text-gray-700 uppercase tracking-wider"
+                >
+                  Client Email
+                </th>
+                <th
                   scope="col"
                   className="px-6 py-3 bg-gray-100 font-semibold text-gray-700 uppercase tracking-wider"
                 >
                   Actions
-                </th> */}
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white">
@@ -116,23 +132,34 @@ export default function CheckoutsTable({ checkouts }: TableProps) {
                       </p>
                     </div>
                   </td>
-                  <td className="px-6 py-3">
+                  {/* <td className="px-6 py-3">
                     <div className="truncate max-w-xs">{checkout.notes}</div>
-                  </td>
+                  </td> */}
                   <td className="whitespace-nowrap px-6 py-3">
                     {formatDateToLocal(checkout.createdAt)}
                   </td>
                   <td className="whitespace-nowrap px-6 py-3">
                     <CheckoutStatus status={checkout.status} />
                   </td>
+                  <td className="whitespace-nowrap px-6 py-3">
+                    <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
+                      {checkout.items?.length || 0}
+                    </span>
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-3">
+                    <div className="truncate max-w-xs">
+                      {checkout.clientUser.email}
+                    </div>
+                  </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-2">
-                      {/* <ViewCheckout id={checkout.id} />
-                      <DeleteCheckout id={checkout.id} />
+                      <ViewCheckout id={checkout.id} />
+                      {/* <DeleteCheckout id={checkout.id} />
+                       */}
                       <UpdateCheckoutStatus
                         id={checkout.id}
                         currentStatus={checkout.status}
-                      /> */}
+                      />
                     </div>
                   </td>
                 </tr>

@@ -1,7 +1,15 @@
 import { useDeleteCartMutation } from '@/features/api/cartApi';
-import { message, Popconfirm, Tooltip } from 'antd';
+import { useUpdateCheckoutStatusMutation } from '@/features/api/checkouts';
+import { CHECKOUT_STATUS_OPTIONS } from '@/utils/constants';
+import { message, Popconfirm, Popover, Tooltip } from 'antd';
 import clsx from 'clsx';
-import { EyeIcon, PlusIcon, ShoppingCartIcon, Trash2Icon } from 'lucide-react';
+import {
+  EditIcon,
+  EyeIcon,
+  PlusIcon,
+  ShoppingCartIcon,
+  Trash2Icon,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import CheckoutModal from './checkout/CheckoutModal';
@@ -115,5 +123,97 @@ export function CheckoutCart({
         onSuccess={onCheckoutSuccess}
       />
     </>
+  );
+}
+
+export function ViewCheckout({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/dashboard/admin/checkouts/${id}`}
+      className="rounded-md border p-2 hover:bg-gray-100"
+    >
+      <EyeIcon className="w-5" />
+    </Link>
+  );
+}
+
+export function UpdateCheckoutStatus({
+  id,
+  currentStatus,
+}: {
+  id: string;
+  currentStatus: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(currentStatus);
+  const [updateCheckoutStatus, { isLoading: isUpdating }] =
+    useUpdateCheckoutStatusMutation();
+
+  const handleUpdateStatus = async () => {
+    try {
+      await updateCheckoutStatus({ id, status: selectedStatus }).unwrap();
+      message.success('Status updated successfully');
+      setOpen(false);
+    } catch (error) {
+      console.error('Failed to update status:', error);
+      message.error('Something went wrong');
+    }
+  };
+
+  const content = (
+    <div className="w-64 p-2">
+      <h3 className="mb-2 font-medium">Update Status</h3>
+      <div className="mb-4">
+        <select
+          value={selectedStatus}
+          onChange={(e) => setSelectedStatus(e.target.value)}
+          className="w-full rounded-md border p-2"
+          disabled={isUpdating}
+        >
+          {CHECKOUT_STATUS_OPTIONS.filter((option) => option.value !== '').map(
+            (option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            )
+          )}
+        </select>
+      </div>
+      <div className="flex justify-end gap-2">
+        <button
+          className="rounded-md border px-3 py-1 hover:bg-gray-100"
+          onClick={() => setOpen(false)}
+          disabled={isUpdating}
+        >
+          Cancel
+        </button>
+        <button
+          className="rounded-md bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
+          onClick={handleUpdateStatus}
+          disabled={isUpdating || selectedStatus === currentStatus}
+        >
+          {isUpdating ? 'Updating...' : 'Update'}
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <Popover
+      content={content}
+      title={null}
+      trigger="click"
+      open={open}
+      onOpenChange={setOpen}
+      placement="leftTop"
+    >
+      <button
+        className="rounded-md border p-2 hover:bg-gray-100"
+        aria-label="Update status"
+      >
+        <span className="sr-only">Update Status</span>
+        <EditIcon className="w-5" />
+      </button>
+    </Popover>
   );
 }

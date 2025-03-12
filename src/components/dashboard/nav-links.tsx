@@ -2,12 +2,18 @@
 
 import { RootState } from '@/store/store';
 import clsx from 'clsx';
-import { ClipboardList, HomeIcon, ShoppingCart, Users } from 'lucide-react';
+import {
+  ClipboardList,
+  DatabaseZap,
+  HomeIcon,
+  ShoppingCart,
+  Users,
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSelector } from 'react-redux';
 
-type UserRole = 'client' | 'talent';
+type UserRole = 'client' | 'talent' | 'admin';
 
 type NavLink = {
   name: string;
@@ -21,7 +27,7 @@ const navLinks: NavLink[] = [
     name: 'Home',
     href: '/dashboard',
     icon: HomeIcon,
-    scope: ['client', 'talent'],
+    scope: ['client', 'talent', 'admin'],
   },
   {
     name: 'Carts',
@@ -35,6 +41,7 @@ const navLinks: NavLink[] = [
     icon: ClipboardList,
     scope: ['client'],
   },
+
   {
     name: 'Profile',
     href: '/dashboard/profile',
@@ -46,6 +53,20 @@ const navLinks: NavLink[] = [
     href: '/',
     icon: Users,
     scope: ['client'],
+  },
+
+  //Admin links:
+  {
+    name: 'Checkouts',
+    href: '/dashboard/admin/checkouts',
+    icon: ClipboardList,
+    scope: ['admin'],
+  },
+  {
+    name: 'Clients',
+    href: '/dashboard/admin/clients',
+    icon: DatabaseZap,
+    scope: ['admin'],
   },
 ];
 
@@ -62,7 +83,7 @@ export default function NavLinks() {
         const LinkIcon = link.icon;
         return (
           <Link
-            key={link.name}
+            key={link.href}
             href={link.href}
             className={clsx(
               'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
