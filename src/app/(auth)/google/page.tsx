@@ -27,6 +27,12 @@ const GoogleAuthPage = () => {
     }
   }, [token, dispatch, router]);
 
+  useEffect(() => {
+    if (userRole === 'admin') {
+      router.push('/dashboard');
+    }
+  }, [userRole, router]);
+
   const {
     data: developerProfile,
     error: devError,
@@ -39,11 +45,15 @@ const GoogleAuthPage = () => {
     isLoading: clientLoading,
   } = useGetClientProfileQuery(undefined, { skip: userRole !== 'client' });
 
-  const isLoading = devLoading || clientLoading;
+  // We only need to consider loading states for non-admin roles
+  const isLoading = userRole === 'admin' ? false : devLoading || clientLoading;
   const profile = userRole === 'talent' ? developerProfile : clientProfile;
   const error = userRole === 'talent' ? devError : clientError;
 
   const handleRedirect = useCallback(() => {
+    // Skip this logic for admin role as we handle it separately
+    if (userRole === 'admin') return;
+
     if (isLoading) return;
 
     if (error) {
