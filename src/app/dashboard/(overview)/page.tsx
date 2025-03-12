@@ -9,7 +9,9 @@ import { useSelector } from 'react-redux';
 
 export default function Page() {
   const userRole = useSelector((state: RootState) => state.auth.role);
-  const { data, isLoading } = useGetDeveloperProfileQuery(undefined);
+  const { data, isLoading } = useGetDeveloperProfileQuery(undefined, {
+    skip: userRole !== 'talent',
+  });
 
   if (isLoading) {
     return <ProfileLoadingSkeleton />;
@@ -18,12 +20,14 @@ export default function Page() {
   return (
     <main>
       <h1 className="mb-4 text-xl md:text-2xl">Dashboard</h1>
-      {userRole === 'talent' ? (
+      {userRole === 'admin' ? (
+        <h1>Welcome to the Admin Page</h1>
+      ) : userRole === 'talent' ? (
         <TalentHomeSection profileData={data?.data as unknown as ProfileData} />
+      ) : userRole === 'client' ? (
+        <h1>Welcome to the Client Page</h1>
       ) : (
-        <>
-          <h1>ClientPage</h1>
-        </>
+        <h1>Unauthorized Access</h1>
       )}
     </main>
   );

@@ -1,9 +1,9 @@
 'use client';
 
-import CheckoutsTable from '@/components/dashboard/checkout/CheckoutsTable';
+import AdminCheckoutsTable from '@/components/dashboard/checkout/AdminCheckoutsTable';
 import EmptyState from '@/components/global/EmptyState';
 import { InvoicesTableSkeleton } from '@/components/skeletons/skeletons';
-import { useGetCheckoutsForClientQuery } from '@/features/api/checkouts';
+import { useGetCheckoutsForAdminQuery } from '@/features/api/checkouts';
 import { RootState } from '@/store/store';
 import { CHECKOUT_STATUS_OPTIONS } from '@/utils/constants';
 import { lusitana } from '@/utils/font';
@@ -15,10 +15,10 @@ export default function Page() {
   const userRole = useSelector((state: RootState) => state.auth.role);
   const [statusFilter, setStatusFilter] = useState('');
 
-  const { data: checkoutResponse, isLoading } = useGetCheckoutsForClientQuery(
+  const { data: checkoutResponse, isLoading } = useGetCheckoutsForAdminQuery(
     statusFilter ? { status: statusFilter } : undefined,
     {
-      skip: userRole !== 'client',
+      skip: userRole !== 'admin',
     }
   );
 
@@ -75,7 +75,7 @@ export default function Page() {
           className={lusitana.className}
         />
       ) : (
-        <CheckoutsTable checkouts={checkouts} />
+        <AdminCheckoutsTable checkouts={checkouts} />
       )}
     </div>
   );

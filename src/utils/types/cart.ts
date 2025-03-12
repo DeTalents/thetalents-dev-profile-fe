@@ -6,6 +6,7 @@ export type ITalent = {
   mainTitle: string;
   yearsOfExperience: number;
   profileImage: string;
+  phone: string;
 };
 
 export type ICartItem = {

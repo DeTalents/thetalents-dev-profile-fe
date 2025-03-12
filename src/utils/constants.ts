@@ -5,3 +5,11 @@ export const experienceLevels = [
   { label: '6 - 8 Years', value: '6-8', minExp: 6, maxExp: 8 },
   { label: '9+ Years', value: '9+', minExp: 9, maxExp: null },
 ];
+
+export const CHECKOUT_STATUS_OPTIONS = [
+  { label: 'All', value: '' },
+  { label: 'Active', value: 'active' },
+  { label: 'Under Process', value: 'under_process' },
+  { label: 'Processed', value: 'processed' },
+  { label: 'Cancelled', value: 'cancelled' },
+];
