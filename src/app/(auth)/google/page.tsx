@@ -51,7 +51,6 @@ const GoogleAuthPage = () => {
   const error = userRole === 'talent' ? devError : clientError;
 
   const handleRedirect = useCallback(() => {
-    // Skip this logic for admin role as we handle it separately
     if (userRole === 'admin') return;
 
     if (isLoading) return;
@@ -68,7 +67,7 @@ const GoogleAuthPage = () => {
         router.push('/login');
       }
     } else if (profile) {
-      router.push(userRole === 'client' ? '/' : '/dashboard');
+      router.push('/dashboard');
     }
   }, [error, profile, isLoading, userRole, router]);
 

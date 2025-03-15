@@ -1,5 +1,8 @@
 import { formatDate } from '@/utils/formatDate';
-import formatProgramName from '@/utils/formatProgramName';
+import {
+  formatAndelaProgram,
+  formatProgramName,
+} from '@/utils/formatProgramName';
 import { DeveloperProfile } from '@/utils/types';
 import { motion } from 'framer-motion';
 import { Calendar, Mail, Phone } from 'lucide-react';
@@ -48,7 +51,7 @@ const ProfileDetails = ({ profile }: ProfileDetailsProps) => {
       {/* References Section */}
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
         <h3 className="text-xl font-semibold mb-6">Professional References</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           {profile.references.map((ref, index: number) => (
             <motion.div
               key={index}
@@ -69,12 +72,14 @@ const ProfileDetails = ({ profile }: ProfileDetailsProps) => {
               <div className="space-y-2 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  <span>{ref.email}</span>
+                  <span className="text-sm">{ref.email}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  <span>{ref.phoneNumber}</span>
-                </div>
+                {ref.phoneNumber && (
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4" />
+                    <span>{ref.phoneNumber}</span>
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
@@ -98,7 +103,7 @@ const ProfileDetails = ({ profile }: ProfileDetailsProps) => {
               )
             ) : (
               <p className="text-gray-600">
-                {formatProgramName(profile.isAndelan)}
+                {formatAndelaProgram(profile.isAndelan)}
               </p>
             )}
           </div>

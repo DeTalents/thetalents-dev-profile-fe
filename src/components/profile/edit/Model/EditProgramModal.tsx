@@ -1,7 +1,7 @@
 import { DropdownInput } from '@/components/inputs/dropdown';
 import { useUpdateProgramInfoMutation } from '@/features/api/profileApi';
 import { andelaOptions, nonAndelaOptions } from '@/utils/enum';
-import formatProgramName from '@/utils/formatProgramName';
+import { formatProgramName } from '@/utils/formatProgramName';
 import { ProgramInfoFormData } from '@/utils/types';
 import { message, Modal } from 'antd';
 import { useEffect } from 'react';

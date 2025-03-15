@@ -75,7 +75,7 @@ const LoginScreen = () => {
         </div>
 
         {/* Stats */}
-        <div className="relative z-10 p-8 md:p-12">
+        {/* <div className="relative z-10 p-8 md:p-12">
           <div className="grid grid-cols-3 gap-4 animate-fade-in-delayed">
             {stats.map((stat) => (
               <div
@@ -94,7 +94,7 @@ const LoginScreen = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* Right Section - Using flex-1 to ensure equal width distribution */}

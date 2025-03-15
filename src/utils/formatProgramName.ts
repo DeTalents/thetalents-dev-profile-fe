@@ -1,5 +1,5 @@
 // Add helper function to format program name
-const formatProgramName = (value: string) => {
+export const formatProgramName = (value: string) => {
   const names = {
     AMALITECH: 'Amalitech',
     THE_GYM: 'The Gym',
@@ -9,4 +9,11 @@ const formatProgramName = (value: string) => {
   return names[value as keyof typeof names] || value;
 };
 
-export default formatProgramName;
+export const formatAndelaProgram = (value: string) => {
+  const names = {
+    ANDELA_2020: 'Attended Andela before 2020',
+    ATLP_STACKUP: 'Andela Technical  Leadership  Program',
+  };
+
+  return names[value as keyof typeof names] || value;
+};

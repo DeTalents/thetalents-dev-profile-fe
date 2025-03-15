@@ -1,7 +1,7 @@
 'use client';
 
 import { andelaOptions, nonAndelaOptions } from '@/utils/enum';
-import formatProgramName from '@/utils/formatProgramName';
+import { formatProgramName } from '@/utils/formatProgramName';
 import { CreateProfileSchema } from '@/validations/createProfile';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';

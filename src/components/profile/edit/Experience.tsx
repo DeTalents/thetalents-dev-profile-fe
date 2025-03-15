@@ -1,3 +1,4 @@
+import UserDescription from '@/components/global/UserDescription';
 import { useDeleteExperienceMutation } from '@/features/api/experienceApi';
 import { Popconfirm } from 'antd';
 import { BriefcaseIcon, PencilIcon, TrashIcon } from 'lucide-react';
@@ -78,11 +79,15 @@ export const Experience = ({ experiences, onUpdate }: ExperienceProps) => {
                 <div>
                   <h3 className="font-semibold text-gray-900">{exp.role}</h3>
                   <p className="text-gray-600">{exp.company}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 mb-2">
                     {formatDate(exp.startDate)} -{' '}
                     {exp.endDate ? formatDate(exp.endDate) : 'Present'}
                   </p>
-                  <p className="mt-2 text-gray-600">{exp.description}</p>
+                  <UserDescription
+                    description={exp.description}
+                    wordsPerParagraph={20}
+                  />
+                  {/* <p className="mt-2 text-gray-600">{exp.description}</p> */}
                 </div>
               </div>
               <div className="flex gap-2">
