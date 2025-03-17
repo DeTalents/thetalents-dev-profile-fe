@@ -11,17 +11,30 @@ export const experienceSchema = z
     }),
     endDate: z
       .string()
-      .refine((date) => !isNaN(Date.parse(date)), {
+      .refine((date) => !date || !isNaN(Date.parse(date)), {
         message: 'End date must be a valid date',
       })
       .optional(),
+    isCurrent: z.boolean().optional(),
     description: z
       .string()
       .min(10, 'Description must be at least 10 characters'),
   })
   .refine(
     (data) => {
-      if (data.endDate) {
+      if (data.isCurrent) {
+        return true;
+      }
+      return !!data.endDate;
+    },
+    {
+      message: 'End date is required unless this is your current role',
+      path: ['endDate'],
+    }
+  )
+  .refine(
+    (data) => {
+      if (data.endDate && !data.isCurrent) {
         return new Date(data.startDate) <= new Date(data.endDate);
       }
       return true;
@@ -35,8 +48,9 @@ export const experienceSchema = z
 const refenceSchema = z.object({
   name: z.string().min(1, 'Reference name is required'),
   email: z.string().email('Invalid email address'),
-  phoneNumber: z.string().optional(),
+  company: z.string().min(1, 'Company is required'),
   relationship: z.string().min(1, 'Relationship is required'),
+  phoneNumber: z.string().optional(),
 });
 
 const createProfileSchema = z
