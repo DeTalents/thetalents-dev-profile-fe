@@ -1,6 +1,13 @@
 import { useDeleteReferenceMutation } from '@/features/api/referenceApi';
 import { Popconfirm } from 'antd';
-import { Mail, PencilIcon, PhoneIcon, TrashIcon, UserIcon } from 'lucide-react';
+import {
+  Mail,
+  PencilIcon,
+  PhoneIcon,
+  School2Icon,
+  TrashIcon,
+  UserIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import AddReferenceModal from './Model/AddReferenceModal';
 import { SectionHeader } from './SectionHeader';
@@ -9,6 +16,7 @@ interface ReferenceFormData {
   name: string;
   relationship: string;
   email: string;
+  company: string;
   phoneNumber: string;
 }
 
@@ -79,6 +87,12 @@ export const References = ({ references, onUpdate }: ReferencesProps) => {
                       <div className="flex items-center gap-2">
                         <PhoneIcon className="w-4 h-4" />
                         {ref.phoneNumber}
+                      </div>
+                    )}
+                    {ref.company && (
+                      <div className="flex items-center gap-2 mt-2">
+                        <School2Icon className="w-4 h-4" />
+                        {ref.company}
                       </div>
                     )}
                   </div>

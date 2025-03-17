@@ -1,6 +1,7 @@
 'use client';
 
 import { Form } from '@/components/profile/form';
+import DashboardSkeleton from '@/components/skeletons/skeletons';
 import { useProfileAccess } from '@/features/hooks/useProfileAccess';
 import { NextPage } from 'next';
 
@@ -10,7 +11,7 @@ const CreateProfile: NextPage = () => {
     redirectTo: '/dashboard', // When user has a profile, redirect here
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <DashboardSkeleton />;
 
   // If hasProfile is true, the useEffect in the hook will handle the redirect
   // We only render the form if the user doesn't have a profile
@@ -18,7 +19,7 @@ const CreateProfile: NextPage = () => {
     return <Form />;
   }
 
-  return <div>Redirecting...</div>;
+  return <DashboardSkeleton />;
 };
 
 export default CreateProfile;

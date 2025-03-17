@@ -6,7 +6,7 @@ import {
 import { Modal } from 'antd';
 import { BriefcaseIcon, Building2 } from 'lucide-react';
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { Input } from '../../input';
 
 interface ExperienceFormData {
@@ -14,6 +14,7 @@ interface ExperienceFormData {
   role: string;
   startDate: string;
   endDate?: string;
+  isCurrent?: boolean;
   description: string;
 }
 
@@ -41,14 +42,22 @@ const AddExperienceModal = ({
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<ExperienceFormData>({
     defaultValues: {
       company: '',
       role: '',
       startDate: '',
       endDate: '',
+      isCurrent: false,
       description: '',
     },
+  });
+
+  const isCurrent = useWatch({
+    control,
+    name: 'isCurrent',
+    defaultValue: initialData?.isCurrent || false,
   });
 
   useEffect(() => {
@@ -58,6 +67,7 @@ const AddExperienceModal = ({
         role: initialData.role,
         startDate: initialData.startDate,
         endDate: initialData.endDate || '',
+        isCurrent: initialData.isCurrent || false,
         description: initialData.description,
       });
     } else if (isOpen) {
@@ -66,6 +76,7 @@ const AddExperienceModal = ({
         role: '',
         startDate: '',
         endDate: '',
+        isCurrent: false,
         description: '',
       });
     }
@@ -130,14 +141,31 @@ const AddExperienceModal = ({
             placeholder="Start date"
           />
 
-          <Input
-            label="End Date"
-            register={register}
-            name="endDate"
-            errors={errors}
-            type="date"
-            placeholder="End date or leave blank if current"
+          {!isCurrent && (
+            <Input
+              label="End Date"
+              register={register}
+              name="endDate"
+              errors={errors}
+              type="date"
+              placeholder="End date"
+            />
+          )}
+        </div>
+
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="isCurrent"
+            {...register('isCurrent')}
+            className="w-4 h-4 mr-2 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
           />
+          <label
+            htmlFor="isCurrent"
+            className="text-sm font-medium text-gray-700"
+          >
+            I currently work here
+          </label>
         </div>
 
         <Textarea

@@ -6,6 +6,7 @@ import ProfileLoadingSkeleton from '@/components/skeletons/ProfileLoadingSkeleto
 import { useGetDeveloperProfileQuery } from '@/features/api/apiSlice';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
+import DeveloperInformation from '../../../components/talents/DeveloperInformation';
 
 export default function Page() {
   const userRole = useSelector((state: RootState) => state.auth.role);
@@ -25,8 +26,9 @@ export default function Page() {
       ) : userRole === 'talent' ? (
         <TalentHomeSection profileData={data?.data as unknown as ProfileData} />
       ) : userRole === 'client' ? (
-        <h1>Welcome to the Client Page</h1>
+        <DeveloperInformation />
       ) : (
+        // <h1>Welcome to the Client Page</h1>
         <h1>Unauthorized Access</h1>
       )}
     </main>

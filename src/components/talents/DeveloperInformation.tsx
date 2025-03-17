@@ -6,7 +6,6 @@ import { DeveloperPagination } from '@/components/talents/DeveloperPagination';
 import { DevelopersHeader } from '@/components/talents/DevelopersHeader';
 import { EmptyState } from '@/components/talents/EmptyState';
 import { LoadingState } from '@/components/talents/LoadingState';
-import { TalentsHeader } from '@/components/talents/TalentHeader';
 import { useGetPublicProfilesQuery } from '@/features/api/apiSlice';
 import { Users } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -129,7 +128,7 @@ function DeveloperInformation() {
   };
   return (
     <div className="min-h-screen bg-gray-50">
-      <TalentsHeader />
+      {/* <TalentsHeader /> */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="flex gap-8">

@@ -48,12 +48,6 @@ const navLinks: NavLink[] = [
     icon: Users,
     scope: ['talent'],
   },
-  {
-    name: 'Talents',
-    href: '/',
-    icon: Users,
-    scope: ['client'],
-  },
 
   //Admin links:
   {

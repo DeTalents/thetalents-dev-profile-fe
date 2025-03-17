@@ -30,6 +30,7 @@ export function ReferencesSection() {
       email: '',
       phoneNumber: '',
       relationship: '',
+      company: '',
     });
   };
 
@@ -143,6 +144,25 @@ export function ReferencesSection() {
                 {getErrorMessage(index, 'relationship') && (
                   <div className="flex items-center gap-1.5 text-red-500 text-sm">
                     <span>{getErrorMessage(index, 'relationship')}</span>
+                  </div>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Input
+                  label="Company"
+                  register={register}
+                  name={`references.${index}.company`}
+                  errors={errors}
+                  placeholder="e.g. Meta, Google Inc"
+                  className={`w-full ${
+                    getErrorMessage(index, 'company')
+                      ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
+                      : ''
+                  }`}
+                />
+                {getErrorMessage(index, 'company') && (
+                  <div className="flex items-center gap-1.5 text-red-500 text-sm">
+                    <span>{getErrorMessage(index, 'company')}</span>
                   </div>
                 )}
               </div>

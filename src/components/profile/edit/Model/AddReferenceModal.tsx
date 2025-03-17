@@ -3,7 +3,13 @@ import {
   useUpdateReferenceMutation,
 } from '@/features/api/referenceApi';
 import { Modal, message } from 'antd';
-import { Mail, PhoneIcon, UserIcon, UsersIcon } from 'lucide-react';
+import {
+  Mail,
+  PhoneIcon,
+  School2Icon,
+  UserIcon,
+  UsersIcon,
+} from 'lucide-react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../input';
@@ -12,6 +18,7 @@ interface ReferenceFormData {
   name: string;
   relationship: string;
   email: string;
+  company: string;
   phoneNumber: string;
 }
 
@@ -45,6 +52,7 @@ const AddReferenceModal = ({
       relationship: '',
       email: '',
       phoneNumber: '',
+      company: '',
     },
   });
 
@@ -55,6 +63,7 @@ const AddReferenceModal = ({
         relationship: initialData.relationship,
         email: initialData.email,
         phoneNumber: initialData.phoneNumber,
+        company: initialData.company,
       });
     } else if (isOpen) {
       reset({
@@ -62,6 +71,7 @@ const AddReferenceModal = ({
         relationship: '',
         email: '',
         phoneNumber: '',
+        company: '',
       });
     }
   }, [isOpen, initialData, reset]);
@@ -142,6 +152,14 @@ const AddReferenceModal = ({
             type="tel"
             placeholder="Phone number"
             icon={<PhoneIcon className="text-zinc-500" size={18} />}
+          />
+          <Input
+            label="Company"
+            register={register}
+            name="company"
+            errors={errors}
+            placeholder="Add company name"
+            icon={<School2Icon className="text-zinc-500" size={18} />}
           />
         </div>
       </form>

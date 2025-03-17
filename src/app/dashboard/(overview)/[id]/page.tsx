@@ -1,4 +1,5 @@
 'use client';
+import Breadcrumbs from '@/components/dashboard/breadcrumbs';
 import ProfileLoadingSkeleton from '@/components/skeletons/ProfileLoadingSkeleton';
 import DeveloperProfile from '@/components/talents/DeveloperProfile';
 import { useGetPublicProfileByIdQuery } from '@/features/api/apiSlice';
@@ -31,5 +32,19 @@ export default function DeveloperProfilePage() {
     );
   }
 
-  return profile ? <DeveloperProfile profile={profile.data} /> : null;
+  return profile ? (
+    <main>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Talents', href: '/dashboard' },
+          {
+            label: `${profile.data.firstName} ${profile.data.secondName}`,
+            href: `/dashboard/${id}`,
+            active: true,
+          },
+        ]}
+      />
+      <DeveloperProfile profile={profile.data} />
+    </main>
+  ) : null;
 }

@@ -23,6 +23,7 @@ export interface Reference {
   name: string;
   email: string;
   phoneNumber: string;
+  company: string;
   relationship: string;
 }
 

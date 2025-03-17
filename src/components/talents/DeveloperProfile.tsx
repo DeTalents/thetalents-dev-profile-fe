@@ -6,10 +6,8 @@ import {
   useGetAllCartsQuery,
 } from '@/features/api/cartApi';
 import { DeveloperProfile as DeveloperProfileType } from '@/utils/types';
-import { Breadcrumb, Button, message } from 'antd';
+import { message } from 'antd';
 import { motion } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import CartModals from './cart/CartModels';
@@ -149,23 +147,6 @@ const DeveloperProfile = ({ profile }: { profile: DeveloperProfileType }) => {
       className="min-h-screen bg-gray-50"
     >
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-6 space-y-4">
-          <Breadcrumb
-            items={[
-              { title: <Link href="/">Talents</Link> },
-              { title: `${profile.firstName} ${profile.secondName}` },
-            ]}
-            className="text-sm"
-          />
-          <Button
-            icon={<ChevronLeft className="w-4 h-4" />}
-            onClick={() => router.back()}
-            className="flex items-center hover:text-indigo-600"
-          >
-            Back to Talents
-          </Button>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <ProfileSidebar
             profile={profile}

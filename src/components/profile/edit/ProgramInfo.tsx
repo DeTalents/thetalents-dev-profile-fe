@@ -1,4 +1,4 @@
-import formatProgramName from '@/utils/formatProgramName';
+import { formatProgramName } from '@/utils/formatProgramName';
 import { AndelaProgram, NonAndelaProgram } from '@/utils/types';
 import { GraduationCapIcon, PencilIcon } from 'lucide-react';
 import { useState } from 'react';
