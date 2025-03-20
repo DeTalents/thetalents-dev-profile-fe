@@ -9,8 +9,8 @@ const DeveloperCard = ({ profile }: { profile: DeveloperProfile }) => {
   const totalCompanies = profile.experiences.length;
 
   return (
-    <Link href={`/dashboard/${profile.id}`} className="block">
-      <div className="w-full rounded-lg border border-gray-200 bg-white p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
+    <Link href={`/dashboard/${profile.id}`} className="block h-full">
+      <div className="w-full h-full flex flex-col rounded-lg border border-gray-200 bg-white p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
         {/* Header Section */}
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <div className="flex items-start justify-between">
@@ -39,29 +39,35 @@ const DeveloperCard = ({ profile }: { profile: DeveloperProfile }) => {
               <Briefcase className="w-3 h-3 mr-1" />
               {totalCompanies} Companies
             </div>
+            <div className="inline-flex items-center px-2 sm:px-2.5 py-1 rounded-full text-xs sm:text-sm border border-indigo-200 bg-indigo-50 text-indigo-600">
+              <Clock className="w-3 h-3 mr-1" />
+              {profile.yearsOfExperience} Years
+            </div>
           </div>
         </div>
 
         {/* Content Section */}
-        <div className="space-y-4 sm:space-y-6">
-          <p className="text-sm sm:text-base text-gray-600 line-clamp-2">
-            {profile.summary}
-          </p>
-
-          <div className="inline-flex items-center px-2 sm:px-2.5 py-1 rounded-full text-xs sm:text-sm border border-indigo-200 bg-indigo-50 text-indigo-600">
-            <Clock className="w-3 h-3 mr-1" />
-            {profile.yearsOfExperience} Years of Experience
+        <div className="flex flex-col flex-grow space-y-4 sm:space-y-6">
+          <div className="flex-grow">
+            <p className="text-sm sm:text-base text-gray-600 line-clamp-2 h-10 sm:h-12">
+              {profile.summary}
+            </p>
           </div>
 
           <div className="space-y-2">
-            <p className="text-xs sm:text-sm font-medium text-gray-700">
-              Top Skills
-            </p>
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
+            <div className="flex items-center justify-between">
+              <p className="text-xs sm:text-sm font-medium text-gray-700">
+                Top Skills
+              </p>
+              <span className="text-xs text-indigo-600">
+                {profile.skills.length} total
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-1.5 sm:gap-2 min-h-8 sm:min-h-10">
               {topSkills.map((skill) => (
                 <span
                   key={skill}
-                  className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm border border-indigo-200 bg-indigo-50 text-indigo-600"
+                  className="flex items-center justify-center px-2.5 sm:px-3 py-1 rounded-md text-xs sm:text-sm border border-indigo-200 bg-indigo-50 text-indigo-600"
                 >
                   {skill}
                 </span>

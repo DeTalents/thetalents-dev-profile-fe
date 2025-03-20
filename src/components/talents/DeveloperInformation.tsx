@@ -126,38 +126,37 @@ function DeveloperInformation() {
       </>
     );
   };
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* <TalentsHeader /> */}
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div className="flex gap-8">
-          <aside
-            className={`transition-all duration-300 overflow-hidden ${
-              isFilterOpen ? 'w-80 opacity-100' : 'w-0 opacity-0'
-            }`}
-          >
-            {isFilterOpen && (
+        <div className="flex flex-col">
+          {/* Header */}
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <DevelopersHeader
+              totalDevelopers={data?.pagination.totalItems || 0}
+              isFilterOpen={isFilterOpen}
+              onToggleFilter={() => setIsFilterOpen(!isFilterOpen)}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+              // searchQuery={searchQuery}
+              // onSearchChange={setSearchQuery}
+            />
+          </div>
+
+          {isFilterOpen && (
+            <div className="mt-4 transition-all duration-300">
               <DeveloperFilters
                 selectedExperience={selectedExperience}
                 onExperienceChange={handleExperienceChange}
-              />
-            )}
-          </aside>
-
-          <main className="flex-1">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
-              <DevelopersHeader
-                totalDevelopers={data?.pagination.totalItems || 0}
-                isFilterOpen={isFilterOpen}
-                onToggleFilter={() => setIsFilterOpen(!isFilterOpen)}
-                viewMode={viewMode}
-                onViewModeChange={setViewMode}
+                position="top"
               />
             </div>
+          )}
 
-            <div className="mt-6">{renderContent()}</div>
-          </main>
+          <div className="mt-6">
+            <main className="flex-1">{renderContent()}</main>
+          </div>
         </div>
       </div>
     </div>
