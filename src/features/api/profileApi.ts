@@ -13,6 +13,23 @@ interface ApiResponse<T> {
   status: number;
 }
 
+type ViewRange = 'week' | 'month';
+
+interface ProfileView {
+  date: string;
+  views: string;
+}
+
+interface ProfileViewsResponse {
+  message: string;
+  data: ProfileView[];
+}
+
+interface ApiResponse<T> {
+  message: string;
+  data: T;
+}
+
 export const profileApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createProfile: builder.mutation<
@@ -93,6 +110,19 @@ export const profileApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Profile'],
     }),
+
+    getProfileViews: builder.query<
+      ProfileViewsResponse,
+      { profileId: string; range: ViewRange }
+    >({
+      query: ({ profileId, range }) => {
+        const queryParam = range === 'month' ? '?range=month' : '';
+        return `/developer-profile/${profileId}/views${queryParam}`;
+      },
+      providesTags: (result, error, { profileId }) => [
+        { type: 'Profile', id: profileId },
+      ],
+    }),
   }),
 });
 
@@ -103,4 +133,5 @@ export const {
   useUpdateSkillsMutation,
   useCreateClientProfileMutation,
   useGetDeveloperProfileRecommendationsQuery,
+  useGetProfileViewsQuery,
 } = profileApi;

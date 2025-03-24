@@ -1,6 +1,5 @@
 import { apiSlice } from './apiSlice';
 
-// Define the Experience type
 interface Experience {
   id: string;
   company: string;
@@ -10,7 +9,6 @@ interface Experience {
   description: string;
 }
 
-// Define the form data type
 export interface ExperienceFormData {
   company: string;
   role: string;
@@ -18,8 +16,6 @@ export interface ExperienceFormData {
   endDate?: string;
   description: string;
 }
-
-// Define API response types
 interface ApiResponse<T> {
   data: T;
   message: string;

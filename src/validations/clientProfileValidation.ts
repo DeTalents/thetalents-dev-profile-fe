@@ -6,7 +6,6 @@ const clientProfileSchema = z.object({
   phone: z.string().min(1, 'Phone number is required'),
 });
 
-// Infer the type from the schema
 export type ClientProfileFormData = z.infer<typeof clientProfileSchema>;
 
 export default clientProfileSchema;

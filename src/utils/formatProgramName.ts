@@ -1,4 +1,3 @@
-// Add helper function to format program name
 export const formatProgramName = (value: string) => {
   const names = {
     AMALITECH: 'Amalitech',

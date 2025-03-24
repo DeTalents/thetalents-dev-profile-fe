@@ -1,4 +1,3 @@
-// components/LoadingState.tsx
 export const LoadingState = () => {
   return (
     <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
