@@ -45,7 +45,6 @@ const CartModals = ({
 
   return (
     <>
-      {/* Cart Selection Modal */}
       <Modal
         title="Select a Cart"
         open={isCartModalVisible}

@@ -26,7 +26,6 @@ const AddSkillsModal = ({
   const handleFormSubmit = async (data: CreateProfileSchema) => {
     try {
       await updateSkills(data).unwrap();
-      console.log('+++', data.skills);
       message.success('Skills updated successfully');
       onClose();
     } catch (error) {

@@ -35,7 +35,6 @@ const ProfileForm = () => {
     try {
       setIsSubmitting(true);
       const response = await createClientProfile(data).unwrap();
-      console.log('Profile created successfully:', response);
       router.push('/dashboard');
     } catch (error: any) {
       if (error.data?.errors) {
