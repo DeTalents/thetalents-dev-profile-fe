@@ -1,23 +1,9 @@
+import { ApiResponse } from '@/utils/types';
 import { ICheckout } from '@/utils/types/checkout';
 import { apiSlice } from './apiSlice';
 
-interface CheckoutResponse {
-  message: string;
-  data: ICheckout[];
-}
-
 interface GetCheckoutsParams {
   status?: string;
-}
-
-interface SingleCheckoutResponse {
-  message: string;
-  data: ICheckout;
-}
-
-interface UpdateStatusResponse {
-  message: string;
-  data: ICheckout;
 }
 
 interface UpdateStatusRequest {
@@ -29,7 +15,7 @@ export const checkoutApi = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     getCheckoutsForClient: builder.query<
-      CheckoutResponse,
+      ApiResponse<ICheckout[]>,
       GetCheckoutsParams | void
     >({
       query: (params) => {
@@ -40,13 +26,13 @@ export const checkoutApi = apiSlice.injectEndpoints({
       },
       providesTags: ['Checkout'],
     }),
-    getCheckoutById: builder.query<SingleCheckoutResponse, string>({
+    getCheckoutById: builder.query<ApiResponse<ICheckout>, string>({
       query: (checkoutId) => `/admin/checkouts/${checkoutId}`,
       providesTags: (result, error, id) => [{ type: 'Checkout', id }],
     }),
 
     getCheckoutsForAdmin: builder.query<
-      CheckoutResponse,
+      ApiResponse<ICheckout[]>,
       GetCheckoutsParams | void
     >({
       query: (params) => {
@@ -59,7 +45,7 @@ export const checkoutApi = apiSlice.injectEndpoints({
     }),
 
     updateCheckoutStatus: builder.mutation<
-      UpdateStatusResponse,
+      ApiResponse<ICheckout>,
       UpdateStatusRequest
     >({
       query: ({ id, status }) => ({

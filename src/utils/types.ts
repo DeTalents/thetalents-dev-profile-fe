@@ -34,7 +34,7 @@ export type DeveloperQueryParams = {
   experience?: string[];
 };
 
-export type Experience = {
+export type IExperience = {
   id: string;
   company: string;
   role: string;
@@ -53,7 +53,7 @@ export type DeveloperProfile = {
   summary: string;
   skills: string[];
   isAndelan: string;
-  references: Reference[];
+  references: IReference[];
   nonAndelaProgram: string | null;
   nonAndelaProgramYear: number | null;
   yearsOfExperience: number;
@@ -63,7 +63,7 @@ export type DeveloperProfile = {
   user: {
     email: string;
   };
-  experiences: Experience[];
+  experiences: IExperience[];
 };
 
 export type Pagination = {
@@ -85,7 +85,7 @@ export interface ProfileResponseData {
   data: CreateProfileSchema;
 }
 
-export type Reference = {
+export type IReference = {
   id: string;
   name: string;
   email: string;
@@ -112,3 +112,12 @@ export interface ApiResponse<T> {
   message: string;
   status: number;
 }
+
+export type IExperienceFormData = {
+  company: string;
+  role: string;
+  startDate: string;
+  endDate?: string;
+  description: string;
+  isCurrent?: boolean;
+};

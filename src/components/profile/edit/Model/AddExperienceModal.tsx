@@ -3,22 +3,14 @@ import {
   useAddExperienceMutation,
   useUpdateExperienceMutation,
 } from '@/features/api/experienceApi';
+import { IExperienceFormData } from '@/utils/types';
 import { Modal } from 'antd';
 import { BriefcaseIcon, Building2 } from 'lucide-react';
 import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { Input } from '../../input';
 
-interface ExperienceFormData {
-  company: string;
-  role: string;
-  startDate: string;
-  endDate?: string;
-  isCurrent?: boolean;
-  description: string;
-}
-
-interface ExperienceItem extends ExperienceFormData {
+interface ExperienceItem extends IExperienceFormData {
   id: string;
 }
 
@@ -43,7 +35,7 @@ const AddExperienceModal = ({
     formState: { errors },
     reset,
     control,
-  } = useForm<ExperienceFormData>({
+  } = useForm<IExperienceFormData>({
     defaultValues: {
       company: '',
       role: '',
@@ -82,7 +74,7 @@ const AddExperienceModal = ({
     }
   }, [isOpen, initialData, reset]);
 
-  const handleFormSubmit = async (data: ExperienceFormData) => {
+  const handleFormSubmit = async (data: IExperienceFormData) => {
     try {
       if (initialData) {
         await updateExperience({

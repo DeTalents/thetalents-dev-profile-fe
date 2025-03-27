@@ -1,12 +1,5 @@
+import { ApiResponse, IReference } from '@/utils/types';
 import { apiSlice } from './apiSlice';
-
-interface Reference {
-  id: string;
-  name: string;
-  email: string;
-  phoneNumber: string;
-  relationship: string;
-}
 
 interface ReferenceFormData {
   name: string;
@@ -15,16 +8,10 @@ interface ReferenceFormData {
   phoneNumber: string;
 }
 
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-  status: number;
-}
-
 export const referenceApi = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    addReference: builder.mutation<ApiResponse<Reference>, ReferenceFormData>({
+    addReference: builder.mutation<ApiResponse<IReference>, ReferenceFormData>({
       query: (data) => ({
         url: '/developer-profile/reference',
         method: 'PATCH',
@@ -34,7 +21,7 @@ export const referenceApi = apiSlice.injectEndpoints({
     }),
 
     updateReference: builder.mutation<
-      ApiResponse<Reference>,
+      ApiResponse<IReference>,
       { referenceId: string; data: ReferenceFormData }
     >({
       query: ({ referenceId, data }) => ({
