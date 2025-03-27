@@ -28,7 +28,6 @@ export default function Page() {
       ) : userRole === 'client' ? (
         <DeveloperInformation />
       ) : (
-        // <h1>Welcome to the Client Page</h1>
         <h1>Unauthorized Access</h1>
       )}
     </main>

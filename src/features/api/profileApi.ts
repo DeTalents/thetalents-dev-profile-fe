@@ -1,4 +1,5 @@
 import {
+  ApiResponse,
   IClientProfile,
   ProgramInfoFormData,
   UpdateBasicDetails,
@@ -7,27 +8,11 @@ import { ClientProfileFormData } from '@/validations/clientProfileValidation';
 import { CreateProfileSchema } from '@/validations/createProfile';
 import { apiSlice } from './apiSlice';
 
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-  status: number;
-}
-
 type ViewRange = 'week' | 'month';
 
 interface ProfileView {
   date: string;
   views: string;
-}
-
-interface ProfileViewsResponse {
-  message: string;
-  data: ProfileView[];
-}
-
-interface ApiResponse<T> {
-  message: string;
-  data: T;
 }
 
 export const profileApi = apiSlice.injectEndpoints({
@@ -112,7 +97,7 @@ export const profileApi = apiSlice.injectEndpoints({
     }),
 
     getProfileViews: builder.query<
-      ProfileViewsResponse,
+      ApiResponse<ProfileView[]>,
       { profileId: string; range: ViewRange }
     >({
       query: ({ profileId, range }) => {

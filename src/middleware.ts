@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 // Routes that require authentication
 const protectedRoutes = [
-  '/', // Add root path to protected routes
+  '/',
   '/dashboard',
   '/create-profile/client',
   '/create-profile/developer',
@@ -34,9 +34,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Be very specific about which routes the middleware applies to
   matcher: [
-    '/', // Add root path to matcher
+    '/',
     '/dashboard',
     '/dashboard/:path*',
     '/create-profile/client',

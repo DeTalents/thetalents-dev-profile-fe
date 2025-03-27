@@ -1,32 +1,11 @@
+import { ApiResponse, IExperience, IExperienceFormData } from '@/utils/types';
 import { apiSlice } from './apiSlice';
-
-interface Experience {
-  id: string;
-  company: string;
-  role: string;
-  startDate: string;
-  endDate?: string;
-  description: string;
-}
-
-export interface ExperienceFormData {
-  company: string;
-  role: string;
-  startDate: string;
-  endDate?: string;
-  description: string;
-}
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-  status: number;
-}
 
 export const experienceApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addExperience: builder.mutation<
-      ApiResponse<Experience>,
-      ExperienceFormData
+      ApiResponse<IExperience>,
+      IExperienceFormData
     >({
       query: (data) => ({
         url: '/developer-profile/experience',
@@ -37,8 +16,8 @@ export const experienceApi = apiSlice.injectEndpoints({
     }),
 
     updateExperience: builder.mutation<
-      ApiResponse<Experience>,
-      { experienceId: string; data: ExperienceFormData }
+      ApiResponse<IExperience>,
+      { experienceId: string; data: IExperienceFormData }
     >({
       query: ({ experienceId, data }) => ({
         url: `/developer-profile/experience/${experienceId}`,

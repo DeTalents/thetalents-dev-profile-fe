@@ -3,6 +3,7 @@ import { RootState } from '@/store/store';
 import { experienceLevels } from '@/utils/constants';
 import { getCookie } from '@/utils/cookieUtils';
 import {
+  ApiResponse,
   DeveloperProfile,
   DeveloperProfilesResponse,
   DeveloperQueryParams,
@@ -15,12 +16,6 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 import { logout } from '../auth/authSlice';
-
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-  status: number;
-}
 
 export const api_base_url =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api/v1';

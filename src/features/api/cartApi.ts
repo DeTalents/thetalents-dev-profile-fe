@@ -15,13 +15,11 @@ interface CreateCartRequest {
 export const cartApi = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    // Get all carts for the current client
     getAllCarts: builder.query<ApiResponse<ICart[]>, void>({
       query: () => '/talent-carts',
       providesTags: ['Cart'],
     }),
 
-    // Create a new cart
     createCart: builder.mutation<ApiResponse<ICart>, CreateCartRequest>({
       query: (cartData) => ({
         url: '/talent-carts',

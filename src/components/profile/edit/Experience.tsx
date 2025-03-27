@@ -1,19 +1,12 @@
 import UserDescription from '@/components/global/UserDescription';
 import { useDeleteExperienceMutation } from '@/features/api/experienceApi';
+import { IExperienceFormData } from '@/utils/types';
 import { Popconfirm } from 'antd';
 import { BriefcaseIcon, PencilIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import AddExperienceModal from './Model/AddExperienceModal';
 import { SectionHeader } from './SectionHeader';
-interface ExperienceFormData {
-  company: string;
-  role: string;
-  startDate: string;
-  endDate?: string;
-  description: string;
-}
-
-interface ExperienceItem extends ExperienceFormData {
+interface ExperienceItem extends IExperienceFormData {
   id: string;
 }
 

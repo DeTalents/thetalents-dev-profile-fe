@@ -7,6 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Typography } from 'antd';
 import Image from 'next/image';
+import Link from 'next/link';
 import GoogleButton from './GoogleButton';
 
 const { Title, Text } = Typography;
@@ -37,11 +38,8 @@ const CurvedUnderline = () => (
 
 const LoginScreen = () => {
   return (
-    // Changed to ensure full viewport width and height
     <main className="w-screen h-screen overflow-hidden flex flex-col md:flex-row">
-      {/* Left Section - Using flex-1 to ensure equal width distribution */}
       <section className="w-1/2 relative flex flex-col justify-between max-sm:w-full">
-        {/* Background Image */}
         <div className="absolute inset-0">
           <Image
             src="https://images.pexels.com/photos/1181421/pexels-photo-1181421.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -52,8 +50,6 @@ const LoginScreen = () => {
           />
           <div className="absolute inset-0 bg-black/70" />
         </div>
-
-        {/* Content */}
         <div className="relative z-10 flex-grow flex items-center px-8 md:px-12 pt-20">
           <div className="text-center w-full animate-fade-in">
             <div className="relative inline-block">
@@ -98,7 +94,7 @@ const LoginScreen = () => {
       </section>
 
       {/* Right Section - Using flex-1 to ensure equal width distribution */}
-      <section className="w-1/2 flex items-center justify-center bg-white p-8 md:p-12 max-sm:w-full max-sm:h-screen">
+      <section className="w-1/2 flex flex-col items-center justify-center bg-white p-8 md:p-12 max-sm:w-full max-sm:h-screen">
         <div className="max-w-md w-full space-y-6 animate-fade-in">
           <Title
             level={2}
@@ -108,10 +104,34 @@ const LoginScreen = () => {
           </Title>
 
           <GoogleButton />
+        </div>
 
-          <Text className="!block !text-center !text-gray-500 !mt-6 !text-sm">
-            Login with email and password coming soon
-          </Text>
+        {/* Footer Links */}
+        <div className="absolute bottom-8 flex space-x-4 text-sm text-gray-500">
+          <Link
+            href="https://thetalents.rw/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-800 transition-colors"
+          >
+            About Us
+          </Link>
+          <Link
+            href="/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-800 transition-colors"
+          >
+            Terms of Service
+          </Link>
+          <Link
+            href="/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-800 transition-colors"
+          >
+            Privacy Policy
+          </Link>
         </div>
       </section>
 
