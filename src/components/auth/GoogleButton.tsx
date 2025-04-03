@@ -14,7 +14,7 @@ const GoogleButton = () => {
     try {
       const authUrl = `${api_base_url}/auth/google`;
       console.log('++++++++', authUrl);
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // await new Promise((resolve) => setTimeout(resolve, 500));
       window.location.href = authUrl;
     } catch (err) {
       setError('Authentication failed. Please try again.');
