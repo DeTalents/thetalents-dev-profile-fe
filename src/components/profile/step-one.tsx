@@ -26,67 +26,82 @@ export function StepOne() {
 
   return (
     <>
-      <div className="flex gap-7">
-        <Input
-          label="First Name"
-          register={methods.register}
-          name="firstName"
-          errors={methods.formState.errors}
-          placeholder="John"
-        />
-
-        <Input
-          label="Last Name"
-          register={methods.register}
-          name="secondName"
-          errors={methods.formState.errors}
-          placeholder="carter"
-        />
-      </div>
-
-      <div className="flex gap-7">
-        <Input
-          label="Phone Number"
-          register={methods.register}
-          name="phone"
-          errors={methods.formState.errors}
-          maxLength={16}
-          placeholder="(123) 456 - 7890"
-        />
-        <Input
-          label="Your Title"
-          register={methods.register}
-          name="mainTitle"
-          errors={methods.formState.errors}
-          placeholder="Senior Software developer...."
-        />
-      </div>
-      <div className="flex gap-7">
-        <DropdownInput
-          label="Have you been in Andela"
-          options={andelaOptions}
-          register={methods.register}
-          name="isAndelan"
-          errors={methods.formState.errors}
-          placeholder="Select andela program"
-        />
-
-        {isAndelanValue === 'NONE' && (
-          <DropdownInput
-            label="If no Andela, have been through"
-            options={nonAndelaOptions}
+      {/* Name Fields */}
+      <div className="flex flex-col md:flex-row gap-4 md:gap-7">
+        <div className="w-full">
+          <Input
+            label="First Name"
             register={methods.register}
-            name="nonAndelaProgram"
+            name="firstName"
             errors={methods.formState.errors}
-            placeholder="Select program"
+            placeholder="John"
           />
+        </div>
+        <div className="w-full">
+          <Input
+            label="Last Name"
+            register={methods.register}
+            name="secondName"
+            errors={methods.formState.errors}
+            placeholder="carter"
+          />
+        </div>
+      </div>
+
+      {/* Contact and Title Fields */}
+      <div className="flex flex-col md:flex-row gap-4 md:gap-7">
+        <div className="w-full">
+          <Input
+            label="Phone Number"
+            register={methods.register}
+            name="phone"
+            errors={methods.formState.errors}
+            maxLength={16}
+            placeholder="(123) 456 - 7890"
+          />
+        </div>
+        <div className="w-full">
+          <Input
+            label="Your Title"
+            register={methods.register}
+            name="mainTitle"
+            errors={methods.formState.errors}
+            placeholder="Senior Software developer...."
+          />
+        </div>
+      </div>
+
+      {/* Program Selection Fields */}
+      <div className="flex flex-col md:flex-row gap-4 md:gap-7">
+        <div className="w-full">
+          <DropdownInput
+            label="Have you been in Andela"
+            options={andelaOptions}
+            register={methods.register}
+            name="isAndelan"
+            errors={methods.formState.errors}
+            placeholder="Select andela program"
+          />
+        </div>
+        {isAndelanValue === 'NONE' && (
+          <div className="w-full">
+            <DropdownInput
+              label="If no Andela, have been through"
+              options={nonAndelaOptions}
+              register={methods.register}
+              name="nonAndelaProgram"
+              errors={methods.formState.errors}
+              placeholder="Select program"
+            />
+          </div>
         )}
       </div>
 
+      {/* Year Field */}
       {isAndelanValue === 'NONE' &&
         nonAndelaProgramValue &&
         nonAndelaProgramValue !== 'NONE' && (
-          <div className="flex">
+          <div className="flex w-full md:w-1/2">
             <Input
               label={`Which year did you attend "${formatProgramName(
                 nonAndelaProgramValue
