@@ -26,7 +26,6 @@ export function StepOne() {
 
   return (
     <>
-      {/* Name Fields */}
       <div className="flex flex-col md:flex-row gap-4 md:gap-7">
         <div className="w-full">
           <Input
@@ -48,7 +47,6 @@ export function StepOne() {
         </div>
       </div>
 
-      {/* Contact and Title Fields */}
       <div className="flex flex-col md:flex-row gap-4 md:gap-7">
         <div className="w-full">
           <Input
@@ -71,7 +69,6 @@ export function StepOne() {
         </div>
       </div>
 
-      {/* Program Selection Fields */}
       <div className="flex flex-col md:flex-row gap-4 md:gap-7">
         <div className="w-full">
           <DropdownInput
