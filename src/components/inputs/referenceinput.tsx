@@ -37,12 +37,6 @@ export function ReferencesSection() {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-bold text-indigo-950">References</h3>
-          <p className="text-sm text-gray-500 mt-1">
-            Add professional references who can vouch for your work
-          </p>
-        </div>
         {fields.length > 0 && (
           <button
             type="button"
@@ -191,7 +185,6 @@ export function ReferencesSection() {
           </motion.div>
         ))}
 
-        {/* Array-level error */}
         {errors.references && !Array.isArray(errors.references) && (
           <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-100 rounded-lg">
             <span className="text-sm text-red-600">

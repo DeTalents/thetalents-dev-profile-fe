@@ -6,6 +6,7 @@ import { BriefcaseIcon, PencilIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import AddExperienceModal from './Model/AddExperienceModal';
 import { SectionHeader } from './SectionHeader';
+
 interface ExperienceItem extends IExperienceFormData {
   id: string;
 }
@@ -49,7 +50,7 @@ export const Experience = ({ experiences, onUpdate }: ExperienceProps) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
       <SectionHeader
         title="Experience"
         canAdd
@@ -64,10 +65,10 @@ export const Experience = ({ experiences, onUpdate }: ExperienceProps) => {
             key={exp.id}
             className="border-b border-gray-200 pb-6 last:border-0 last:pb-0"
           >
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4">
-                <div className="p-2 bg-indigo-100 rounded-lg">
-                  <BriefcaseIcon className="w-6 h-6 text-indigo-600" />
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+              <div className="flex flex-col sm:flex-row sm:gap-4">
+                <div className="p-2 bg-indigo-100 rounded-lg mb-3 sm:mb-0 flex-shrink-0 w-fit max-sm:hidden">
+                  <BriefcaseIcon className="w-6 h-6 text-indigo-600 max-sm:hidden" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">{exp.role}</h3>
@@ -80,13 +81,13 @@ export const Experience = ({ experiences, onUpdate }: ExperienceProps) => {
                     description={exp.description}
                     wordsPerParagraph={20}
                   />
-                  {/* <p className="mt-2 text-gray-600">{exp.description}</p> */}
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 mt-3 sm:mt-0">
                 <button
                   className="p-2 text-gray-600 hover:text-indigo-600 transition-colors"
                   onClick={() => handleEditExperience(exp.id)}
+                  aria-label="Edit experience"
                 >
                   <PencilIcon className="w-5 h-5" />
                 </button>
@@ -104,6 +105,7 @@ export const Experience = ({ experiences, onUpdate }: ExperienceProps) => {
                   <button
                     className="p-2 text-gray-600 hover:text-red-600 transition-colors"
                     disabled={isDeleting}
+                    aria-label="Delete experience"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>

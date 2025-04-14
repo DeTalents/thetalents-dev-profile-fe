@@ -35,7 +35,7 @@ const UserDescription: React.FC<UserDescriptionProps> = ({
       {formattedParagraphs.map((paragraph, index) => (
         <p
           key={index}
-          className={`text-gray-700 leading-relaxed ${paragraphClassName}`}
+          className={`text-gray-700 leading-relaxed max-sm:text-sm ${paragraphClassName}`}
         >
           {paragraph}
         </p>
