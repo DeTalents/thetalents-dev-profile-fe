@@ -65,15 +65,15 @@ export const TalentProfileSection = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-7xl mx-auto py-6 px-4"
+      className="max-w-7xl mx-auto py-4 sm:py-6 px-3 sm:px-4"
     >
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
-        <div className="flex items-start gap-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6 mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
           <ProfileImage
             firstName={profileData.firstName}
             secondName={profileData.secondName}
           />
-          <div className="flex-grow">
+          <div className="flex-grow w-full sm:w-auto">
             <BasicInfo
               firstName={profileData.firstName}
               secondName={profileData.secondName}
@@ -87,10 +87,11 @@ export const TalentProfileSection = ({
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 space-y-6">
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        <div className="md:col-span-2 space-y-4 sm:space-y-6">
           {programInfo.show && (
-            <div className="rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
               <ProgramInfo
                 programName={programInfo.programName ?? ''}
                 programYear={programInfo.programYear}
@@ -102,15 +103,15 @@ export const TalentProfileSection = ({
               />
             </div>
           )}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
             <Experience experiences={profileData.experiences} />
           </div>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
             <References references={profileData.references} />
           </div>
         </div>
-        <div className="space-y-6">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="space-y-4 sm:space-y-6">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
             <Skills skills={profileData.skills} />
           </div>
           <ProfileCompletionCard profileId={profileData.id} />

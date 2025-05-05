@@ -55,7 +55,7 @@ export const References = ({ references, onUpdate }: ReferencesProps) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
       <SectionHeader
         title="References"
         canAdd
@@ -70,38 +70,39 @@ export const References = ({ references, onUpdate }: ReferencesProps) => {
             key={ref.id}
             className="border-b border-gray-200 pb-6 last:border-0 last:pb-0"
           >
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4">
-                <div className="p-2 bg-indigo-100 rounded-lg">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+              <div className="flex flex-col sm:flex-row sm:gap-4">
+                <div className="p-2 bg-indigo-100 rounded-lg mb-3 sm:mb-0 flex-shrink-0 w-fit max-sm:hidden">
                   <UserIcon className="w-6 h-6 text-indigo-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900">{ref.name}</h3>
                   <p className="text-gray-600">{ref.relationship}</p>
                   <div className="mt-1 text-sm text-gray-500">
-                    <div className="flex items-center gap-2">
-                      <Mail className="w-4 h-4" />
-                      {ref.email}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Mail className="w-4 h-4 flex-shrink-0" />
+                      <span className="break-all">{ref.email}</span>
                     </div>
                     {ref.phoneNumber && (
-                      <div className="flex items-center gap-2">
-                        <PhoneIcon className="w-4 h-4" />
-                        {ref.phoneNumber}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <PhoneIcon className="w-4 h-4 flex-shrink-0" />
+                        <span>{ref.phoneNumber}</span>
                       </div>
                     )}
                     {ref.company && (
-                      <div className="flex items-center gap-2 mt-2">
-                        <School2Icon className="w-4 h-4" />
-                        {ref.company}
+                      <div className="flex items-center gap-2 mt-2 flex-wrap">
+                        <School2Icon className="w-4 h-4 flex-shrink-0" />
+                        <span>{ref.company}</span>
                       </div>
                     )}
                   </div>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 mt-3 sm:mt-0">
                 <button
                   className="p-2 text-gray-600 hover:text-indigo-600 transition-colors"
                   onClick={() => handleEditReference(ref.id)}
+                  aria-label="Edit reference"
                 >
                   <PencilIcon className="w-5 h-5" />
                 </button>
@@ -119,6 +120,7 @@ export const References = ({ references, onUpdate }: ReferencesProps) => {
                   <button
                     className="p-2 text-gray-600 hover:text-red-600 transition-colors"
                     disabled={isDeleting}
+                    aria-label="Delete reference"
                   >
                     <TrashIcon className="w-5 h-5" />
                   </button>

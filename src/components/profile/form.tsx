@@ -111,19 +111,19 @@ export function Form() {
   }
 
   return (
-    <div className="mt-6 flex flex-col items-center justify-center gap-3 p-8 text-center">
-      <h1 className="text-4xl font-bold text-indigo-950">
+    <div className="mt-6 flex flex-col items-center justify-center gap-3 p-4 md:p-8 text-center">
+      <h1 className="text-2xl md:text-4xl font-bold text-indigo-950 px-2">
         Build Your Developer Spotlight
       </h1>
-      <p className="max-w-xl text-zinc-400 text-lg">
-        Great developers deserve great opportunities. Let’s build your story
+      <p className="max-w-xl text-zinc-400 text-base md:text-lg px-2">
+        Great developers deserve great opportunities. Lets build your story
         together—step by step. 🚀 Your future starts here
       </p>
 
       <FormProvider {...methods}>
-        <form className="flex flex-col gap-7 max-w-[698px] max-h-max">
-          <section className="h-full mt-8 flex flex-col gap-4 shadow-sm border-zinc-200 border-[1px] rounded-[34px] pl-12 pt-8 pr-14 pb-20 bg">
-            <div className="flex items-center gap-[18px] px-8 pb-8 border-b-[1px] border-zinc-200">
+        <form className="flex flex-col gap-7 w-full max-w-[698px] max-h-max">
+          <section className="h-full mt-8 flex flex-col gap-4 shadow-sm border-zinc-200 border-[1px] rounded-[34px] px-4 md:pl-12 md:pr-14 pt-8 pb-20 bg">
+            <div className="flex items-center gap-2 md:gap-[18px] px-2 md:px-8 pb-8 border-b-[1px] border-zinc-200 overflow-x-auto no-scrollbar">
               {steps.map((step) => (
                 <Step
                   key={step.id}
@@ -136,7 +136,7 @@ export function Form() {
 
             <div
               className={twMerge(
-                'mt-8 text-left',
+                'mt-8 text-left px-2',
                 currentStep === 3 && 'flex flex-col items-center gap-2'
               )}
             >
@@ -146,16 +146,17 @@ export function Form() {
                   alt="Finish"
                   width={0}
                   height={0}
-                  className="mb-[10px] size-[7.5rem]"
+                  className="mb-[10px] w-[5rem] md:w-[7.5rem] h-auto"
+                  priority
                 />
               )}
 
-              <h2 className="text-2xl font-bold text-indigo-950">
+              <h2 className="text-xl md:text-2xl font-bold text-indigo-950">
                 {steps[currentStep].title}
               </h2>
               <p
                 className={twMerge(
-                  'mt-2 text-zinc-500 max-w-[500px] text-left',
+                  'mt-2 text-zinc-500 max-w-[500px] text-left text-sm md:text-base',
                   currentStep === 3 && 'text-center'
                 )}
               >
@@ -168,7 +169,7 @@ export function Form() {
                   onClick={nextStep}
                   disabled={isLoading}
                   className={twMerge(
-                    'mt-4 px-10 py-3 bg-indigo-600 text-white rounded-[66px] hover:bg-indigo-700 transition-colors duration-100',
+                    'mt-4 px-6 md:px-10 py-2.5 md:py-3 bg-indigo-600 text-white rounded-[66px] hover:bg-indigo-700 transition-colors duration-100 text-sm md:text-base w-full md:w-auto',
                     isLoading &&
                       'opacity-50 cursor-not-allowed hover:bg-indigo-600'
                   )}
@@ -177,32 +178,29 @@ export function Form() {
                 </button>
               )}
 
-              <div className="flex flex-col gap-11 mt-10">
+              <div className="flex flex-col gap-8 md:gap-11 mt-8 md:mt-10">
                 {steps[currentStep].component}
               </div>
             </div>
           </section>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4 px-2">
             {currentStep > 0 && (
               <button
                 type="button"
                 onClick={previousStep}
-                className="px-10 py-3 bg-transparent cursor-pointer text-indigo-600 border-[1px] border-indigo-600 rounded-[66px] hover:bg-indigo-600 hover:text-white transition-colors duration-100"
+                className="px-6 md:px-10 py-2.5 md:py-3 bg-transparent cursor-pointer text-indigo-600 border-[1px] border-indigo-600 rounded-[66px] hover:bg-indigo-600 hover:text-white transition-colors duration-100 text-sm md:text-base w-full md:w-auto"
               >
                 Previous Step
               </button>
             )}
 
-            <div />
-
             {currentStep < steps.length - 1 && (
               <button
                 type="button"
                 onClick={nextStep}
-                className="px-10 py-3 bg-indigo-600 text-white rounded-[66px] hover:bg-indigo-700 transition-colors duration-100
-								disabled:bg-transparent disabled:border-[1px] disabled:border-zinc-200 disabled:text-zinc-400 disabled:cursor-not-allowed 
-							"
+                className="px-6 md:px-10 py-2.5 md:py-3 bg-indigo-600 text-white rounded-[66px] hover:bg-indigo-700 transition-colors duration-100 text-sm md:text-base w-full md:w-auto
+              disabled:bg-transparent disabled:border-[1px] disabled:border-zinc-200 disabled:text-zinc-400 disabled:cursor-not-allowed"
               >
                 Next Step
               </button>

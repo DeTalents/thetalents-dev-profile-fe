@@ -15,7 +15,8 @@ export function Step({ id, isLast = false, currentStep }: StepProps) {
     <>
       <div
         className={twMerge(
-          'flex items-center justify-center size-[34px] rounded-full bg-zinc-200',
+          'flex items-center justify-center text-sm md:text-base',
+          'size-[28px] md:size-[34px] rounded-full bg-zinc-200',
           (isActive || isPast) &&
             'bg-indigo-600 text-white transition-colors duration-200'
         )}
@@ -24,10 +25,10 @@ export function Step({ id, isLast = false, currentStep }: StepProps) {
       </div>
 
       {!isLast && (
-        <div className="min-w-24 h-[6px] rounded-[40px] bg-zinc-200">
+        <div className="min-w-12 md:min-w-24 h-[4px] md:h-[6px] rounded-[40px] bg-zinc-200">
           <div
             className={twMerge(
-              'h-[6px] rounded-[40px] bg-indigo-600 transition-all duration-500',
+              'h-full rounded-[40px] bg-indigo-600 transition-all duration-500',
               progressWidth
             )}
           />
