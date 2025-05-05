@@ -25,11 +25,14 @@ export function DropdownInput<T extends Record<string, any>>({
   const hasError = !!errors[name];
 
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={name} className="text-indigo-950 text-lg font-bold">
+    <div className="flex flex-col gap-2 w-full">
+      <label
+        htmlFor={name}
+        className="text-indigo-950 text-base md:text-lg font-bold"
+      >
         {label}
       </label>
-      <div className="relative w-[284px]">
+      <div className="relative w-full max-w-[284px]">
         <select
           id={name}
           defaultValue=""
@@ -37,7 +40,7 @@ export function DropdownInput<T extends Record<string, any>>({
           aria-invalid={hasError}
           {...props}
           className={twMerge(
-            'w-full py-3 px-3 text-sm bg-transparent border-2 rounded-lg focus:outline-none transition',
+            'w-full py-2.5 md:py-3 px-2.5 md:px-3 text-sm bg-transparent border-2 rounded-lg focus:outline-none transition',
             hasError
               ? 'border-red-500 focus:border-red-500'
               : 'border-zinc-200 focus:border-indigo-500'
@@ -58,7 +61,7 @@ export function DropdownInput<T extends Record<string, any>>({
         </select>
       </div>
       {hasError && (
-        <p className="text-red-500 text-sm">
+        <p className="text-red-500 text-xs md:text-sm">
           {String(errors[name]?.message || '')}
         </p>
       )}
